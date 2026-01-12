@@ -34,7 +34,7 @@ export const strong = async ( name, selectors, callback ) => {
 export const init_strong_global_listener = async () => {
   document.addEventListener("animationstart", (event) => {
     if ( event.animationName in strong_listeners && !event.target.dataset["strong-listened"] ) {
-      event.target.dataset["stronglistenedGNT0wK"] = "true"
+      event.target.dataset["stronglistenedGNT0wK" /*добавить название ивента к этому дата сету*/] = "true"
       strong_listeners[event.animationName].callback(event.target)
     }
   })
