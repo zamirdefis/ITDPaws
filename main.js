@@ -130,10 +130,33 @@ import * as ui from "./src/ui.js"
   highlight.load()
 
   console.log("ITDPaws!")
-  ui.els.location.create("navbar", ".sidebar-nav", ui.els.location.types.static)
-  ui.els.location.create("actions", ".post-actions-right", ui.els.location.types.dynamic)
-  ui.els.button.create("test_btn", "navbar", { "on_click_c" : () => {console.log(123)}, })
-  ui.els.button.create("test_btn", "actions", { "on_click_c" : () => {console.log(321)}, })
+  new Promise((resolve, reject) => {
+    ui.els.builder.create("button", (data) => {
+      const btn = document.createElement("button")
+      btn.style.width = "20px"
+      btn.style.height = "20px"
+      btn.style.backgroundColor = data.color ?? "#ffffff"
+      if (data.on_click_c) {
+        btn.onclick = data.on_click_c
+      }
+      return btn
+    })
+    resolve()
+  })
+    .then(() => {
+      ui.els.location.create("navbar", ".sidebar-nav", ui.els.location.types.static)
+      ui.els.location.create("actions", ".post-actions-right", ui.els.location.types.dynamic)
+      ui.els.location.create("create_post", ".create-post, .wall-post-form", ui.els.location.types.dynamic)
+      ui.els.location.create("post_menu_btn", ".post-menu-btn", ui.els.location.types.dynamic)
+      ui.els.location.create("clans", ".clan-item", ui.els.location.types.dynamic)
+
+      ui.els.bundle.create("test_btn", "navbar", { builder_name: "button", color: "#ff0000", on_click_c : () => { console.log(123)} })
+      ui.els.bundle.create("test_btn", "actions", { builder_name: "button", color: "#00ff00", on_click_c : () => { console.log(321)} })
+      ui.els.bundle.create("test_btn", "create_post", { builder_name: "button", color: "#ff00ff", on_click_c : () => { console.log(321)} })
+      ui.els.bundle.create("test_btn", "post_menu_btn", { builder_name: "button", color: "#0000ff", on_click_c : () => { console.log(321)} })
+      ui.els.bundle.create("test_btn", "clans", { builder_name: "button", color: "#ffffff", on_click_c : () => { console.log(321)} })
+    })
+  
 
 
   // ui.navbar_entity_t.init()
