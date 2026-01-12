@@ -1,10 +1,10 @@
 import * as vars from "./src/vars.js"
-import * as ui from "./src/navbar.js"
 import * as style from "./src/styles.js"
 import * as network from "./src/network.js"
 import * as waiter from "./src/waiter.js"
 import * as bundles from "./src/bundles.js"
 import * as highlight from "./src/highlight.js"
+import * as ui from "./src/ui.js"
 
 (function() {
   'use strict';
@@ -125,23 +125,29 @@ import * as highlight from "./src/highlight.js"
   // Your code here...
   style.inject()
   waiter.init_strong_global_listener()
-  bundles.post_handler.init()
+  // bundles.post_handler.init()
 
   highlight.load()
 
   console.log("ITDPaws!")
-  ui.navbar_entity_t.init()
+  ui.els.location.create("navbar", ".sidebar-nav", ui.els.location.types.static)
+  ui.els.location.create("actions", ".post-actions-right", ui.els.location.types.dynamic)
+  ui.els.button.create("test_btn", "navbar", { "on_click_c" : () => {console.log(123)}, })
+  ui.els.button.create("test_btn", "actions", { "on_click_c" : () => {console.log(321)}, })
 
-  ui.navbar_entity_t.new_button("get_new_token", () => {
-    network.get_new_token().then(local_token => {
-      navigator.clipboard.writeText(local_token)
-    })
-  }, new ui.nav_bar_btn_data_t("🔐") )
 
-  ui.navbar_entity_t.new_button("settings", (is_pressed) => {
-    console.log(is_pressed)
-    // Nothing yet, but the extension menu should open here :P
-  }, new ui.nav_bar_btn_data_t(["⚙", "✖"], ui.BTN_TYPE_E.TOGGLE))
+  // ui.navbar_entity_t.init()
+  //
+  // ui.navbar_entity_t.new_button("get_new_token", () => {
+  //   network.get_new_token().then(local_token => {
+  //     navigator.clipboard.writeText(local_token)
+  //   })
+  // }, new ui.nav_bar_btn_data_t("🔐") )
+  //
+  // ui.navbar_entity_t.new_button("settings", (is_pressed) => {
+  //   console.log(is_pressed)
+  //   // Nothing yet, but the extension menu should open here :P
+  // }, new ui.nav_bar_btn_data_t(["⚙", "✖"], ui.BTN_TYPE_E.TOGGLE))
 
   // ui.navbar_entity_t.new_button("test", (is_pressed) => {
   //   console.log("test")
