@@ -15,6 +15,9 @@ export const integrated = {
 export const inject = async () => {
   const style_navbar = document.createElement("style")
   style_navbar.textContent = `
+.post-views {
+  flex-grow: 1
+}
 .navbar-custom-btn {
 border: 1px solid rgba(255, 255, 255, 0.1);
 width: 45px;
@@ -32,7 +35,30 @@ border-color: rgba(255, 255, 255, 0.3);
 }
 
 .navbar-custom-btn:active {
-background-color: rgba(255, 255, 255, 0);
+background-color: rgba(255, 255, 255, 0.21);
+border-color: rgba(255, 255, 255, 0.40);
+}
+
+.navbar-custom-btn-is-pressed {
+background-color: rgba(255, 255, 255, 0.2);
+border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.post-action-btn:hover {
+background-color: rgba(255, 255, 255, 0.04);
+border-color: rgba(255, 255, 255, 0.3);
+color: rgba(255, 255, 255, 0.5)
+}
+
+.post-action-btn:active {
+background-color: rgba(255, 255, 255, 0.1);
+border-color: rgba(255, 255, 255, 0.40);
+color: rgba(255, 255, 255, 0.6)
+}
+
+.post-action-btn-pressed {
+background-color: rgba(255, 255, 255, 0.2);
+border: 2px solid rgba(255, 255, 255, 0.4);
 }
 
 @keyframes font-bounce {
@@ -43,7 +69,42 @@ background-color: rgba(255, 255, 255, 0);
 }
 
 .animate-font {
-animation: font-bounce 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+animation: font-bounce 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.post-action-btn {
+background: none;
+border: none;
+padding: 0;
+cursor: pointer;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+width: 34px;
+height: 34px;
+border-radius: 50%; 
+color: #656769;
+transition: background-color 0.2s, color 0.2s;
+outline: none;
+vertical-align: middle;
+// opacity: .4;
+}
+
+.post-action-btn svg {
+width: 20px;
+height: 20px;
+fill: currentColor;
+pointer-events: none;
+transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+@keyframes svg-bounce {
+0% { scale: ${parseInt(vars.navbar.default_icon_size) / parseInt(vars.navbar.default_icon_size) }, fill: currentColor; }
+1% { scale: ${parseInt(vars.navbar.min_icon_size) / parseInt(vars.navbar.default_icon_size)}; }   
+}
+
+.animate-svg {
+animation: svg-bounce 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
 }
  
 `
@@ -109,14 +170,8 @@ transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   width: 15px;
   height: 15px;
 }
-@keyframes svg-bounce {
-0% { scale: ${parseInt(vars.navbar.default_icon_size) / parseInt(vars.navbar.default_icon_size) }, fill: currentColor; }
-1% { scale: ${parseInt(vars.navbar.min_icon_size) / parseInt(vars.navbar.default_icon_size)}; }   
-}
 
-.animate-svg {
-animation: svg-bounce 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
-}
+
 `
   document.head.appendChild(style_post_actions)
 }

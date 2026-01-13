@@ -2,6 +2,12 @@ import * as waiter from "./waiter.js"
 
 const storage = new Map()
 
+export const createElement = (name) => {
+  const el = document.createElement("button")
+  el.classList.add("itd-paws")
+  return el
+}
+
 class location_t {
 
   types = Object.freeze({
@@ -16,7 +22,7 @@ class location_t {
     return false
   }
 
-  create(name, selector, type = this.types.dynamic, overhead_handler_c = () => {}) {
+  create = async (name, selector, type = this.types.dynamic, overhead_handler_c = () => {}) => {
     if (storage.has(name)) {
       return new Error("Location with this name already exists")
     }
@@ -52,6 +58,7 @@ class location_t {
         }
       })
     }
+    return true
   }
 }
 
@@ -91,8 +98,8 @@ class bundle_t {
     if (!storage.has(location_name)) {
       throw new Error(`Unknown location "${location_name}"`)
     }
-    if (storage.get(location_name).bundles.get(name)) {
-      throw new Error(`The button named "${location_name}" already exists`)
+    if (storage.get(location_name).bundles.has(bundle_name)) {
+      throw new Error(`The button named "${bundle_name}" already exists`)
     }
     this.#process_new_bundle_(bundle_name, location_name, data)
   }

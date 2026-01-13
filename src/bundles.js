@@ -10,43 +10,43 @@ import * as highlight from "./highlight.js"
 //   constructor(svg = , )
 // }
 //
-// export class post_handler {
+export class post_handler {
 //
-//   static create_code_block = (json) => {
-//     const data = JSON.stringify(json.data, null, 2)
-//
-//     const pre = document.createElement('pre')
-//     const code = document.createElement('code')
-//
-//     const wrapper = document.createElement("div")
-//     wrapper.className = "code-block-wrapper"
-//
-//     const copy_btn = document.createElement("button")
-//     copy_btn.className = "code-copy-button"
-//     copy_btn.innerHTML = styles.integrated.copy_svg
-//
-//
-//     pre.addEventListener("click", (event) => {
-//       event.stopPropagation()
-//     }, true)
-//
-//     copy_btn.onclick = () => {
-//       navigator.clipboard.writeText(data)
-//     }
-//
-//     const highlighted = window.hljs.highlight(data, { language: 'json' }).value
-//
-//     code.className = "code-block-json-view language-js"
-//     pre.className = "code-block-json-view-pre"
-//
-//     code.innerHTML = highlighted
-//     pre.appendChild(code);
-//     wrapper.appendChild(copy_btn);
-//     wrapper.appendChild(pre);
-//
-//
-//     return wrapper
-//   }
+  static create_code_block = (json) => {
+    const data = JSON.stringify(json.data, null, 2)
+
+    const pre = document.createElement('pre')
+    const code = document.createElement('code')
+
+    const wrapper = document.createElement("div")
+    wrapper.className = "code-block-wrapper"
+
+    const copy_btn = document.createElement("button")
+    copy_btn.className = "code-copy-button"
+    copy_btn.innerHTML = styles.integrated.copy_svg
+
+
+    pre.addEventListener("click", (event) => {
+      event.stopPropagation()
+    }, true)
+
+    copy_btn.onclick = () => {
+      navigator.clipboard.writeText(data)
+    }
+
+    const highlighted = window.hljs.highlight(data, { language: 'json' }).value
+
+    code.className = "code-block-json-view language-js"
+    pre.className = "code-block-json-view-pre"
+
+    code.innerHTML = highlighted
+    pre.appendChild(code);
+    wrapper.appendChild(copy_btn);
+    wrapper.appendChild(pre);
+
+
+    return wrapper
+  }
 //
 //   #storage_ = {}
 //
@@ -116,5 +116,5 @@ import * as highlight from "./highlight.js"
 //     //   // 
 //     // })
 //   }
-// }
+}
 
