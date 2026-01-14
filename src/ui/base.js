@@ -1,4 +1,4 @@
-import * as waiter from "./waiter.js"
+import * as waiter from "../waiter.js"
 
 const storage = new Map()
 

@@ -1,11 +1,12 @@
 import * as vars from "./src/vars.js"
-import * as style from "./src/styles.js"
+import * as style from "./src/ui/styles.js"
 import * as network from "./src/network.js"
 import * as waiter from "./src/waiter.js"
 import * as bundles from "./src/bundles.js"
-import * as highlight from "./src/highlight.js"
-import * as ui from "./src/ui.js"
-import * as icon_manager from "./src/icon_manager.js"
+import * as highlight from "./src/ui/highlight.js"
+import * as ui from "./src/ui/base.js"
+import * as icon_manager from "./src/ui/icon_manager.js"
+
 
 (function() {
   'use strict';
