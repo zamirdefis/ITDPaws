@@ -1,4 +1,5 @@
 import * as waiter from "../waiter.js"
+import * as builders_loader_ from "./builders_loader.js"
 
 const storage = new Map()
 
@@ -86,11 +87,7 @@ class bundle_t {
       }
     }
   }
-  /**
-   * @param {string} name - button name
-   * @param {string} location_name - location name
-   * @param {string} button_properties - content_type - text/svg
-  */ 
+  
   create = (bundle_name, location_name, data = {},) => {
     if (typeof data !== "object" || !data.builder_name || !els.builder.exist(data.builder_name)) {
       throw new Error("Unknown builder or data")
@@ -106,9 +103,9 @@ class bundle_t {
 }
 
 class builder_t {
-  #builders_ = new Map()
+  builders_ = new Map()
   exist = (builder_name) => {
-    return this.#builders_.has(builder_name) ? true : false
+    return this.builders_.has(builder_name) ? true : false
   }
   // build_c must returns a dom element
   create = (builder_name, build_c) => {
@@ -116,20 +113,35 @@ class builder_t {
     if (this.exist(builder_name)) {
       throw new Error(`The builder named "${builder_name}" already exists`)
     }
-    this.#builders_.set(builder_name, build_c)
+    this.builders_.set(builder_name, build_c)
     return true;
   }
   build = (builder_name, data) => {
     if (!this.exist(builder_name)) {
       throw new Error("Unknown builder")
     }
-    return this.#builders_.get(builder_name)(data)
+    return this.builders_.get(builder_name)(data)
   }
   
 }
 
+const builder_i = new builder_t()
+
+class builders_loader_t {
+  load = async () => { 
+    const builders = await builders_loader_.load()
+      debugger
+    for (builder of builders) {
+      builder_i.create(builder[0], builder[1])
+    }
+  }
+}
+
 export class els {
-  static builder = new builder_t()
+  static builder = builder_i 
   static location = new location_t()
   static bundle = new bundle_t()
+  static builders_loader = new builders_loader_t()
 }
+
+
