@@ -4,7 +4,7 @@ import * as builders_loader_ from "./builders_loader.js"
 const storage = new Map()
 
 export const createElement = (name) => {
-  const el = document.createElement("button")
+  const el = document.createElement(name)
   el.classList.add("itd-paws")
   return el
 }
@@ -69,12 +69,12 @@ class bundle_t {
     toggle : 1,
     radio : 2
   })
-  #apply_overhead_ = (location_name, bundle_template) => {
-    const ohh = els.location.get(location_name).overhead_handler_c
-    if (!ohh) { return false }
-    ohh(bundle_template)
-    return true
-  }
+  // #apply_overhead_ = (location_name, bundle_template) => {
+  //   const ohh = els.location.get(location_name).overhead_handler_c
+  //   if (!ohh) { return false }
+  //   ohh(bundle_template)
+  //   return true
+  // } // fix it
   #process_new_bundle_ = (bundle_name, location_name, bundle_data) => {
     const location = els.location.get(location_name)
     location.bundles.set(bundle_name, bundle_data)
@@ -125,20 +125,19 @@ class builder_t {
   
 }
 
-const builder_i = new builder_t()
+const builder_o = new builder_t()
 
 class builders_loader_t {
   load = async () => { 
     const builders = await builders_loader_.load()
-      debugger
-    for (builder of builders) {
-      builder_i.create(builder[0], builder[1])
+    for (const builder of builders) {
+      builder_o.create(builder[0], builder[1])
     }
   }
 }
 
 export class els {
-  static builder = builder_i 
+  static builder = builder_o
   static location = new location_t()
   static bundle = new bundle_t()
   static builders_loader = new builders_loader_t()
