@@ -1,5 +1,4 @@
 import * as waiter from "../waiter.js"
-import * as builders_loader_ from "./builders_loader.js"
 
 const storage = new Map()
 
@@ -39,7 +38,7 @@ class location_t {
       waiter.weak(selector, (root) => {
         location["root"] = root
         for (const bundle_data of location["bundles"].values()) {
-          const bundle = els.builder.build(bundle_data.builder_name, bundle_data)
+          const bundle = builder.build(bundle_data.builder_name, bundle_data)
           if (!bundle) {
             console.warn(`Broken builder : ${bundle_data.bundle_name}`)
             return
@@ -50,7 +49,7 @@ class location_t {
     } else if (type == this.types.dynamic) {
       waiter.strong(name, selector, (root) => {
         for (const bundle_data of location["bundles"].values()) {
-          const bundle = els.builder.build(bundle_data.builder_name, bundle_data)
+          const bundle = builder.build(bundle_data.builder_name, bundle_data)
           if (!bundle) {
             console.warn(`Broken builder : ${bundle_data.bundle_name}`)
             return
@@ -70,17 +69,17 @@ class bundle_t {
     radio : 2
   })
   // #apply_overhead_ = (location_name, bundle_template) => {
-  //   const ohh = els.location.get(location_name).overhead_handler_c
+  //   const ohh = location.get(location_name).overhead_handler_c
   //   if (!ohh) { return false }
   //   ohh(bundle_template)
   //   return true
   // } // fix it
   #process_new_bundle_ = (bundle_name, location_name, bundle_data) => {
-    const location = els.location.get(location_name)
-    location.bundles.set(bundle_name, bundle_data)
+    const loc_ref = location.get(location_name)
+    loc_ref.bundles.set(bundle_name, bundle_data)
     // this.#apply_overhead_(location_name, bundle_template) fix it
-    if (location.type == els.location.types.static && location.root) {
-      const bundle = els.builder.build(bundle_data.builder_name, bundle_data)
+    if (loc_ref.type == location.types.static && loc_ref.root) {
+      const bundle = builder.build(bundle_data.builder_name, bundle_data)
       if (!bundle) {
         console.warn(`Broken builder : ${bundle_data.bundle_name}`)
         return
@@ -89,7 +88,7 @@ class bundle_t {
   }
   
   create = (bundle_name, location_name, data = {},) => {
-    if (typeof data !== "object" || !data.builder_name || !els.builder.exist(data.builder_name)) {
+    if (typeof data !== "object" || !data.builder_name || !builder.exist(data.builder_name)) {
       throw new Error("Unknown builder or data")
     }
     if (!storage.has(location_name)) {
@@ -125,22 +124,17 @@ class builder_t {
   
 }
 
-const builder_o = new builder_t()
+// const builder_o = new builder_t()
+//
+// class builders_loader_t {
+//   load = async () => { 
+//     const builders = await builders_loader_.load()
+//     for (const builder of builders) {
+//       builder_o.create(builder[0], builder[1])
+//     }
+//   }
+// }
 
-class builders_loader_t {
-  load = async () => { 
-    const builders = await builders_loader_.load()
-    for (const builder of builders) {
-      builder_o.create(builder[0], builder[1])
-    }
-  }
-}
-
-export class els {
-  static builder = builder_o
-  static location = new location_t()
-  static bundle = new bundle_t()
-  static builders_loader = new builders_loader_t()
-}
-
-
+export const builder = new builder_t()
+export const location = new location_t()
+export const bundle = new bundle_t()

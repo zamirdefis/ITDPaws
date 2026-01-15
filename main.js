@@ -1,19 +1,15 @@
-import * as vars from "./src/vars.js"
-import * as style from "./src/ui/styles.js"
+// import * as vars from "./src/vars.js"
 import * as network from "./src/network.js"
 import * as waiter from "./src/waiter.js"
-import * as bundles from "./src/bundles.js"
-import * as highlight from "./src/ui/highlight.js"
-import * as ui from "./src/ui/base.js"
-import * as icon_manager from "./src/ui/icon_manager.js"
+import * as ui from "./src/ui/ui.js"
 
 (function() {
   'use strict';
-  style.inject()
+  ui.style.inject()
   waiter.init_strong_global_listener()
   // bundles.post_handler.init()
 
-  highlight.load()
+  ui.highlight.load()
 
   console.log("ITDPaws!")
 
@@ -23,7 +19,7 @@ import * as icon_manager from "./src/ui/icon_manager.js"
   })
 
 
-  ui.els.builders_loader.load()
+  ui.builders_loader.load()
     .then((res) => {
       ui.els.location.create("navbar", ".sidebar-nav", ui.els.location.types.static)
         .then( (result) => {
@@ -34,20 +30,20 @@ import * as icon_manager from "./src/ui/icon_manager.js"
               ui.els.location.create("test", ".post-actions-right", ui.els.location.types.dynamic)
                 .then((result) => {
                   ui.els.bundle.create("test_btn199", "test", {
-                    builder_name: "navbar_btn",
+                    builder_name: "navbar",
                   })
                 })
             } 
           })
           ui.els.bundle.create("test_btn2", "navbar", {
-            builder_name: "navbar_btn",
+            builder_name: "navbar",
             on_click_c : (is_pressed) => { console.log("btn2 : ", is_pressed)
             },
             type : btn_type_e.toggle,
             icon : ["🫣", "😑"]
           })
           ui.els.bundle.create("test_btn3", "navbar", {
-            builder_name: "navbar_btn",
+            builder_name: "navbar",
             on_click_c : (is_pressed) => { console.log("btn3 : ", is_pressed)
 
             },
@@ -56,7 +52,7 @@ import * as icon_manager from "./src/ui/icon_manager.js"
             activated : true
           })
           ui.els.bundle.create("test_btn4", "navbar", {
-            builder_name: "navbar_btn",
+            builder_name: "navbar",
             on_click_c : (is_pressed) => { console.log("btn4 : ", is_pressed)
 
 
@@ -70,7 +66,7 @@ import * as icon_manager from "./src/ui/icon_manager.js"
 
       ui.els.location.create("post_actions_loc", ".post-actions-right", ui.els.location.types.dynamic).then( (res) => {
         ui.els.bundle.create("test_btn", "post_actions_loc", { 
-          builder_name: "post_action_btn",
+          builder_name: "post_actions",
           on_click_c : (is_pressed, btn) => { 
 
             const create_code_block = (json) => {
@@ -84,7 +80,7 @@ import * as icon_manager from "./src/ui/icon_manager.js"
 
               const copy_btn = ui.createElement("button")
               copy_btn.className = "code-copy-button"
-              copy_btn.innerHTML = icon_manager.get("copy") 
+              copy_btn.innerHTML = ui.icon_manager.get("copy") 
 
 
               pre.addEventListener("click", (event) => {

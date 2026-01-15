@@ -1,5 +1,7 @@
+import * as els from "../els.js"
+
 export default function(data) {
-  const btn = ui.createElement("button")
+  const btn = els.createElement("button")
   btn.classList.add("navbar-custom-btn")
 
   if (data.hasOwnProperty("activated")) {
