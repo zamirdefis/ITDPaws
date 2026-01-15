@@ -1,18 +1,21 @@
+import * as els from "../els.js"
+import * as icon_manager from "../icon_manager.js"
+
 export default function(data) {
-  const btn = ui.createElement("button")
+  const btn = els.createElement("button")
   btn.classList.add("post-action-btn")
 
-  if (data.hasOwnProperty("type")) {
+  if (Object.hasOwn(data, "type")) {
     if (typeof data.type !== "number") {
       throw new Error(`"type" must be a number`)
     }
   } else {
-    data.type = btn_type_e.single
+    data.type = els.btn_type_e.single
   }
 
-  if (data.hasOwnProperty("icon")) {
+  if (Object.hasOwn(data, "icon")) {
     if (typeof data.icon !== "string") {
-      if (!Array.isArray(data.icon) || (data.type !== btn_type_e.toggle && data.type !== btn_type_e.radio) || data.icon.length !== 2 || typeof data.icon[0] !== "string" || typeof data.icon[1] !== "string") {
+      if (!Array.isArray(data.icon) || (data.type !== els.btn_type_e.toggle && data.type !== els.btn_type_e.radio) || data.icon.length !== 2 || typeof data.icon[0] !== "string" || typeof data.icon[1] !== "string") {
         throw new Error("Incorrect icon! Must be a string or an array with two strings (for toggle)")
       } 
     }
@@ -20,7 +23,7 @@ export default function(data) {
     data.icon = "unknown"
   }
 
-  if (data.hasOwnProperty("on_click_c")) {
+  if (Object.hasOwn(data, "on_click_c")) {
     if (typeof data.on_click_c !== "function") {
       throw new Error(`on_click_c" must be a function`)
     }
@@ -41,7 +44,7 @@ export default function(data) {
   let is_pressed = false
 
   const onclick_extended_c = () => {
-    if (data.type === btn_type_e.toggle) {
+    if (data.type === els.btn_type_e.toggle) {
       if (!is_pressed) {
         // btn.classList.add("navbar-custom-btn-is-pressed")
         // btn.style.backgroundColor = "rgba(255, 255, 255, 0.2)"

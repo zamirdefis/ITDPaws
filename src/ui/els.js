@@ -1,5 +1,10 @@
 import * as waiter from "../waiter.js"
 
+export const btn_type_e = Object.freeze({
+  toggle: 0,
+  single: 1
+})
+
 const storage = new Map()
 
 export const createElement = (name) => {

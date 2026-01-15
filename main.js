@@ -13,12 +13,6 @@ import * as ui from "./src/ui/ui.js"
 
   console.log("ITDPaws!")
 
-  const btn_type_e = Object.freeze({
-    toggle: 0,
-    single: 1
-  })
-
-
   ui.builders_loader.load()
     .then((res) => {
       ui.els.location.create("navbar", ".sidebar-nav", ui.els.location.types.static)
@@ -39,7 +33,7 @@ import * as ui from "./src/ui/ui.js"
             builder_name: "navbar",
             on_click_c : (is_pressed) => { console.log("btn2 : ", is_pressed)
             },
-            type : btn_type_e.toggle,
+            type : ui.els.btn_type_e.toggle,
             icon : ["🫣", "😑"]
           })
           ui.els.bundle.create("test_btn3", "navbar", {
@@ -47,7 +41,7 @@ import * as ui from "./src/ui/ui.js"
             on_click_c : (is_pressed) => { console.log("btn3 : ", is_pressed)
 
             },
-            type : btn_type_e.toggle,
+            type : ui.els.btn_type_e.toggle,
             icon : [ "🦊", "🐺" ],
             activated : true
           })
@@ -58,7 +52,7 @@ import * as ui from "./src/ui/ui.js"
 
 
             },
-            type : btn_type_e.single,
+            type : ui.els.btn_type_e.single,
             icon : "🙄",
             activated : true
           })
