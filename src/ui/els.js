@@ -54,6 +54,7 @@ class location_t {
     } else if (type == this.types.dynamic) {
       waiter.strong(name, selector, (root) => {
         for (const bundle_data of location["bundles"].values()) {
+          if (bundle_data.disabled) { continue; }
           const bundle = builder.build(bundle_data.builder_name, bundle_data)
           if (!bundle) {
             console.warn(`Broken builder : ${bundle_data.bundle_name}`)
@@ -64,6 +65,28 @@ class location_t {
       })
     }
     return true
+  }
+  // потом крч перебираем все бандлы и apply к ним
+  // при disable удаляем бандлы. при enable вызываем apply_to_existing
+  // и надо еще параметр сделать в bundle_data типо disable/enable
+  // не забудь в post_actions builder'е добавить класс
+  apply_to_existing_ = async (location_name, bundle_name) => {
+    const loc_ref = this.get(location_name)
+    const bundle_data = loc_ref.bundles.get(bundle_name)
+    if (bundle_data.disabled) {
+      return;
+    }
+    document.querySelectorAll(loc_ref.selector).forEach( (root) => {
+      if (root.querySelector(".builded-" + bundle_data.bundle_name)) {
+        return;
+      }
+      const bundle = builder.build(bundle_data.builder_name, bundle_data)
+      if (!bundle) {
+        console.warn(`Broken builder : ${bundle_data.bundle_name}`)
+        return
+      }
+      root.appendChild(bundle)
+    })
   }
 }
 
@@ -80,6 +103,8 @@ class bundle_t {
   //   return true
   // } // fix it
   #process_new_bundle_ = (bundle_name, location_name, bundle_data) => {
+    bundle_data.bundle_name = bundle_name
+
     const loc_ref = location.get(location_name)
     loc_ref.bundles.set(bundle_name, bundle_data)
     // this.#apply_overhead_(location_name, bundle_template) fix it
@@ -89,7 +114,26 @@ class bundle_t {
         console.warn(`Broken builder : ${bundle_data.bundle_name}`)
         return
       }
+    } else {
+       location.apply_to_existing_(location_name, bundle_name)
     }
+  }
+
+  disable = (bundle_name, location_name) => {
+    const bundle_data = location.get(location_name).bundles.get(bundle_name)
+    if (bundle_data.disabled) { return }
+    bundle_data.disabled = true
+    document.querySelectorAll(".builded-" + bundle_name).forEach((bundle) => {
+      bundle.remove()
+      // for test: (remove it)
+      bundle.querySelector("svg").remove()
+    })
+  }
+  enable = (bundle_name, location_name) => {
+    const bundle_data = location.get(location_name).bundles.get(bundle_name)
+    if (!bundle_data.disabled) { return }
+    bundle_data.disabled = false
+    location.apply_to_existing_(location_name, bundle_name)
   }
   
   create = (bundle_name, location_name, data = {},) => {

@@ -20,6 +20,10 @@ export const weak = async ( selector, callback, delay = 100) => {
 const strong_listeners = {}
 
 export const strong = async ( name, selectors, callback ) => {
+  document.querySelectorAll(selectors).forEach(el => {
+    el.dataset["strongListened" + name[0].toUpperCase() + name.substring(1) ] = "true"
+  })
+
   const style = document.createElement("style")
   strong_listeners[name] = { "style": style, "selectors": selectors, "callback": callback }
   style.innerHTML =`
@@ -33,8 +37,9 @@ export const strong = async ( name, selectors, callback ) => {
 
 export const init_strong_global_listener = async () => {
   document.addEventListener("animationstart", (event) => {
-    if ( event.animationName in strong_listeners && !event.target.dataset["strong-listened"] ) {
-      event.target.dataset["stronglistenedGNT0wK" /*добавить название ивента к этому дата сету*/] = "true"
+    if ( event.animationName in strong_listeners &&
+          !event.target.dataset["strongListened" + event.animationName[0].toUpperCase() + event.animationName.substring(1) ] ) {
+      event.target.dataset["strongListened" + event.animationName[0].toUpperCase() + event.animationName.substring(1) ] = "true"
       strong_listeners[event.animationName].callback(event.target)
     }
   })

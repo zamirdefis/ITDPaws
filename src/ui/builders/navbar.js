@@ -4,6 +4,7 @@ import * as vars from "../../vars.js"
 export default function(data) {
   const btn = els.createElement("button")
   btn.classList.add("navbar-custom-btn")
+  btn.classList.add("builded-" + data.bundle_name)
 
   if (Object.hasOwn(data, "activated")) {
     if (typeof data.activated !== "boolean") {

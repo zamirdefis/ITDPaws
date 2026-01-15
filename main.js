@@ -15,49 +15,6 @@ import * as ui from "./src/ui/ui.js"
 
   ui.builders_loader.load()
     .then((res) => {
-      ui.els.location.create("navbar", ".sidebar-nav", ui.els.location.types.static)
-        .then( (result) => {
-          ui.els.bundle.create("test_btn", "navbar", { 
-            builder_name: "navbar",
-            on_click_c : (is_pressed) => { console.log(123)
-
-              ui.els.location.create("test", ".post-actions-right", ui.els.location.types.dynamic)
-                .then((result) => {
-                  ui.els.bundle.create("test_btn199", "test", {
-                    builder_name: "navbar",
-                  })
-                })
-            } 
-          })
-          ui.els.bundle.create("test_btn2", "navbar", {
-            builder_name: "navbar",
-            on_click_c : (is_pressed) => { console.log("btn2 : ", is_pressed)
-            },
-            type : ui.els.btn_type_e.toggle,
-            icon : ["🫣", "😑"]
-          })
-          ui.els.bundle.create("test_btn3", "navbar", {
-            builder_name: "navbar",
-            on_click_c : (is_pressed) => { console.log("btn3 : ", is_pressed)
-
-            },
-            type : ui.els.btn_type_e.toggle,
-            icon : [ "🦊", "🐺" ],
-            activated : true
-          })
-          ui.els.bundle.create("test_btn4", "navbar", {
-            builder_name: "navbar",
-            on_click_c : (is_pressed) => { console.log("btn4 : ", is_pressed)
-
-
-
-            },
-            type : ui.els.btn_type_e.single,
-            icon : "🙄",
-            activated : true
-          })
-        })
-
       ui.els.location.create("post_actions_loc", ".post-actions-right", ui.els.location.types.dynamic).then( (res) => {
         ui.els.bundle.create("test_btn", "post_actions_loc", { 
           builder_name: "post_actions",
@@ -138,7 +95,75 @@ import * as ui from "./src/ui/ui.js"
             navigator.clipboard.writeText(btn.closest(".post-container").dataset.postId)
           }
         })
+        ui.els.bundle.create("disable_test", "post_actions_loc", {
+          builder_name: "post_actions",
+          on_click_c : (is_pressed, btn) => {
+            console.log("HJSDHFHDS")
+          },
+          disabled : true
+        })
       })
+
+
+      
+
+      let teeest = true
+      ui.els.location.create("navbar", ".sidebar-nav", ui.els.location.types.static)
+        .then( (result) => {
+          // const leak_test = async () => {
+          //   while (true) {
+          //     waiter.sleep(100)
+          //     if (teeest) {
+          //       ui.els.bundle.enable("disable_test", "post_actions_loc") 
+          //     } else {
+          //       ui.els.bundle.disable("disable_test", "post_actions_loc") 
+          //     }
+          //     teeest = !teeest
+          //   }
+          //
+          // }
+          // leak_test()
+          ui.els.bundle.create("test_btn", "navbar", { 
+            builder_name: "navbar",
+            on_click_c : (is_pressed) => { console.log(123)
+              if (teeest) {
+                ui.els.bundle.enable("disable_test", "post_actions_loc") 
+              } else {
+                ui.els.bundle.disable("disable_test", "post_actions_loc") 
+              }
+              teeest = !teeest
+            } 
+          })
+          ui.els.bundle.create("test_btn2", "navbar", {
+            builder_name: "navbar",
+            on_click_c : (is_pressed) => { console.log("btn2 : ", is_pressed)
+            },
+            type : ui.els.btn_type_e.toggle,
+            icon : ["🫣", "😑"]
+          })
+          ui.els.bundle.create("test_btn3", "navbar", {
+            builder_name: "navbar",
+            on_click_c : (is_pressed) => { console.log("btn3 : ", is_pressed)
+
+            },
+            type : ui.els.btn_type_e.toggle,
+            icon : [ "🦊", "🐺" ],
+            activated : true
+          })
+          ui.els.bundle.create("test_btn4", "navbar", {
+            builder_name: "navbar",
+            on_click_c : (is_pressed) => { console.log("btn4 : ", is_pressed)
+
+
+
+            },
+            type : ui.els.btn_type_e.single,
+            icon : "🙄",
+            activated : true
+          })
+        })
+
+      
     })
     .catch((res) => {
       console.log(res)

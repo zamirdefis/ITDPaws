@@ -4,6 +4,7 @@ import * as icon_manager from "../icon_manager.js"
 export default function(data) {
   const btn = els.createElement("button")
   btn.classList.add("post-action-btn")
+  btn.classList.add("builded-" + data.bundle_name)
 
   if (Object.hasOwn(data, "type")) {
     if (typeof data.type !== "number") {
