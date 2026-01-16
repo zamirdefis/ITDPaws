@@ -88,6 +88,15 @@ class location_t {
       root.appendChild(bundle)
     })
   }
+  static destruct = (location_name) => {
+    const loc_ref = location.get(location_name)
+    if (loc_ref) {
+      waiter.stop_strong(location_name)
+      storage.delete(location_name)
+      return true
+    }
+    return false
+  }
 }
 
 class bundle_t {

@@ -9,7 +9,7 @@ export const weak = async ( selector, callback, delay = 100) => {
       return
     }
     const passed = delay * layer
-    if ( passed > 10000 && passed % 2000 === 0) {
+    if ( passed > 10000 && passed % 2000 === 0) { // протестить
       console.warn("Infinite yield possible")
     }
     await sleep(delay)
@@ -18,6 +18,17 @@ export const weak = async ( selector, callback, delay = 100) => {
 }
 
 const strong_listeners = {}
+
+export const stop_strong = (name) => {
+  if (strong_listeners[name]) {
+    const style = strong_listeners[name].style
+    if (style && style.parentNode) {
+      style.remove()
+    }
+    strong_listeners[name].callback = null; // удалить и проверить наличие утечки
+    delete strong_listeners[name]
+  }
+}
 
 export const strong = async ( name, selectors, callback ) => {
   document.querySelectorAll(selectors).forEach(el => {
