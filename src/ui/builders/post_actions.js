@@ -1,10 +1,14 @@
 import * as els from "../els.js"
 import * as icon_manager from "../icon_manager.js"
+import * as general from "./utils/general.js"
 
 export default function(data) {
-  const btn = els.createElement("button")
+  const btn = general.init_bundle("button", data)
+
+  general.init_interrupter(btn, data)
+
   btn.classList.add("post-action-btn")
-  btn.classList.add("builded-" + data.bundle_name)
+
 
   if (Object.hasOwn(data, "type")) {
     if (typeof data.type !== "number") {
@@ -69,8 +73,7 @@ export default function(data) {
   if (data.activated) {
     onclick_extended_c()
   }
-
-  btn.onclick = onclick_extended_c
+  general.smart_event_listener("click", onclick_extended_c, btn, data)
 
   return btn
 }

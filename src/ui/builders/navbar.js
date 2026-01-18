@@ -1,10 +1,13 @@
 import * as els from "../els.js"
 import * as vars from "../../vars.js"
+import * as general from "./utils/general.js"
 
 export default function(data) {
-  const btn = els.createElement("button")
+  const btn = general.init_bundle("button", data)
+
+  general.init_interrupter(btn, data)
+
   btn.classList.add("navbar-custom-btn")
-  btn.classList.add("builded-" + data.bundle_name)
 
   if (Object.hasOwn(data, "activated")) {
     if (typeof data.activated !== "boolean") {
@@ -78,8 +81,7 @@ export default function(data) {
   if (data.activated) {
     onclick_extended_c()
   }
-
-  btn.onclick = onclick_extended_c
-
+  general.smart_event_listener("click", onclick_extended_c, btn, data)
+  
   return btn
 }

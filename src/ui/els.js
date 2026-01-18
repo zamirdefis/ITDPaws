@@ -1,5 +1,7 @@
 import * as waiter from "../waiter.js"
 
+
+
 export const btn_type_e = Object.freeze({
   toggle: 0,
   single: 1
@@ -7,11 +9,7 @@ export const btn_type_e = Object.freeze({
 
 const storage = new Map()
 
-export const createElement = (name) => {
-  const el = document.createElement(name)
-  el.classList.add("itd-paws")
-  return el
-}
+
 
 class location_t {
 
@@ -112,7 +110,10 @@ class bundle_t {
   //   return true
   // } // fix it
   #process_new_bundle_ = (bundle_name, location_name, bundle_data) => {
+    // auto params
     bundle_data.bundle_name = bundle_name
+    bundle_data.listener_interrupters = new Map()
+    bundle_data.location_name = location_name
 
     const loc_ref = location.get(location_name)
     loc_ref.bundles.set(bundle_name, bundle_data)
@@ -133,9 +134,9 @@ class bundle_t {
     if (bundle_data.disabled) { return }
     bundle_data.disabled = true
     document.querySelectorAll(".builded-" + bundle_name).forEach((bundle) => {
+      // bundle.onclick = null
       bundle.remove()
       // for test: (remove it)
-      bundle.querySelector("svg").remove()
     })
   }
   enable = (bundle_name, location_name) => {
@@ -196,3 +197,35 @@ class builder_t {
 export const builder = new builder_t()
 export const location = new location_t()
 export const bundle = new bundle_t()
+
+export function init_interrupt_manager() {
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach(m => m.removedNodes.forEach(node => {
+      if (node.nodeType !== 1) return;
+
+      const bundles = node.matches('[data-bundle_name]') ? [node] : node.querySelectorAll('[data-bundle_name]');
+
+      bundles.forEach(bundle => {
+        const bundle_name = bundle.dataset.bundle_name
+        const loc_name = bundle.dataset.location_name
+        if (bundle_name && loc_name) {
+          const loc = location.get(loc_name)
+          if (loc && loc.bundles.has(bundle_name) && loc.bundles.get(bundle_name).listener_interrupters.has(bundle)) {
+            const controller = loc.bundles.get(bundle_name).listener_interrupters.get(bundle)
+            controller.abort()
+            loc.bundles.get(bundle_name).listener_interrupters.delete(bundle)
+            return
+          }
+        }
+        console.error("Corrupted bundle!", bundle)
+      })
+    }))
+  })
+  observer.observe(
+    document.body,
+    { 
+      childList: true,
+      subtree: true
+    }
+  )
+}
