@@ -10,6 +10,7 @@ import * as ui from "./src/ui/ui.js"
   // bundles.post_handler.init()
 
   ui.highlight.load()
+  ui.els.init_interrupt_manager()
 
   console.log("ITDPaws!")
 
@@ -107,8 +108,7 @@ import * as ui from "./src/ui/ui.js"
 
       
 
-      let teeest = true
-      ui.els.location.create("navbar", ".sidebar-nav", ui.els.location.types.static)
+      ui.els.location.create("navbar", ".sidebar-nav", ui.els.location.types.dynamic)
         .then( (result) => {
           // const leak_test = async () => {
           //   while (true) {
@@ -126,13 +126,13 @@ import * as ui from "./src/ui/ui.js"
           ui.els.bundle.create("test_btn", "navbar", { 
             builder_name: "navbar",
             on_click_c : (is_pressed) => { console.log(123)
-              if (teeest) {
+              if (is_pressed) {
                 ui.els.bundle.enable("disable_test", "post_actions_loc") 
               } else {
                 ui.els.bundle.disable("disable_test", "post_actions_loc") 
               }
-              teeest = !teeest
-            } 
+            },
+            type: ui.els.btn_type_e.toggle
           })
           ui.els.bundle.create("test_btn2", "navbar", {
             builder_name: "navbar",
