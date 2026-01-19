@@ -3,37 +3,38 @@ import * as icon_manager from "../icon_manager.js"
 import * as general from "./utils/general.js"
 
 export default function(data) {
-  const btn = general.init_bundle("button", data)
+  const bundle_data = data.bundle_data
+  const btn = general.init_bundle("button", bundle_data)
 
-  general.init_interrupter(btn, data)
+  general.init_interrupter(btn, bundle_data)
 
   btn.classList.add("post-action-btn")
 
 
-  if (Object.hasOwn(data, "type")) {
-    if (typeof data.type !== "number") {
+  if (Object.hasOwn(bundle_data, "type")) {
+    if (typeof bundle_data.type !== "number") {
       throw new Error(`"type" must be a number`)
     }
   } else {
-    data.type = els.btn_type_e.single
+    bundle_data.type = els.btn_type_e.single
   }
 
-  if (Object.hasOwn(data, "icon")) {
-    if (typeof data.icon !== "string") {
-      if (!Array.isArray(data.icon) || (data.type !== els.btn_type_e.toggle && data.type !== els.btn_type_e.radio) || data.icon.length !== 2 || typeof data.icon[0] !== "string" || typeof data.icon[1] !== "string") {
+  if (Object.hasOwn(bundle_data, "icon")) {
+    if (typeof bundle_data.icon !== "string") {
+      if (!Array.isArray(bundle_data.icon) || (bundle_data.type !== els.btn_type_e.toggle && bundle_data.type !== els.btn_type_e.radio) || bundle_data.icon.length !== 2 || typeof bundle_data.icon[0] !== "string" || typeof bundle_data.icon[1] !== "string") {
         throw new Error("Incorrect icon! Must be a string or an array with two strings (for toggle)")
       } 
     }
   } else {
-    data.icon = "unknown"
+    bundle_data.icon = "unknown"
   }
 
-  if (Object.hasOwn(data, "on_click_c")) {
-    if (typeof data.on_click_c !== "function") {
+  if (Object.hasOwn(bundle_data, "on_click_c")) {
+    if (typeof bundle_data.on_click_c !== "function") {
       throw new Error(`on_click_c" must be a function`)
     }
   } else {
-    data.on_click_c = (status) => { console.warn("Unspecified callback on click") }
+    bundle_data.on_click_c = (status) => { console.warn("Unspecified callback on click") }
   }
 
   const bounce_anim = (btn_ref) => {
@@ -44,37 +45,37 @@ export default function(data) {
     btn_ref.classList.add("animate-svg")
   }
 
-  btn.innerHTML = icon_manager.get(data.icon)
+  btn.innerHTML = icon_manager.get(bundle_data.icon)
 
   let is_pressed = false
 
   const onclick_extended_c = () => {
-    if (data.type === els.btn_type_e.toggle) {
+    if (bundle_data.type === els.btn_type_e.toggle) {
       if (!is_pressed) {
         // btn.classList.add("navbar-custom-btn-is-pressed")
         // btn.style.backgroundColor = "rgba(255, 255, 255, 0.2)"
         // btn.style.border = "2px solid rgba(255, 255, 255, 0.4)"
-        btn.textContent = Array.isArray(data.icon) ? data.icon[1] : data.icon
+        btn.textContent = Array.isArray(bundle_data.icon) ? bundle_data.icon[1] : bundle_data.icon
         bounce_anim(btn)
       } else {
         // btn.classList.remove("navbar-custom-btn-is-pressed")
         // btn.style.backgroundColor = "rgba(255, 255, 255, 0.01)"
         // btn.style.border = "1px solid rgba(255, 255, 255, 0.1)"
-        btn.textContent = Array.isArray(data.icon) ? data.icon[0] : data.icon
+        btn.textContent = Array.isArray(bundle_data.icon) ? bundle_data.icon[0] : bundle_data.icon
         bounce_anim(btn)
       }
       is_pressed = !is_pressed
     } else {
       bounce_anim(btn)
     }
-    data.on_click_c(is_pressed, btn)
+    bundle_data.on_click_c(is_pressed, btn)
   }
 
-  if (data.activated) {
+  if (bundle_data.activated) {
     onclick_extended_c()
   }
-  general.smart_event_listener("click", onclick_extended_c, btn, data)
+  general.smart_event_listener("click", onclick_extended_c, btn, bundle_data)
 
-  return btn
+  data.root.appendChild(btn)
 }
 

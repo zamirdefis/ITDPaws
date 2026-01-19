@@ -6,7 +6,7 @@ const createElement = (name) => {
 }
 
 export function init_bundle(el_type, bundle_data) {
-  const bundle = createElement("button")  
+  const bundle = createElement(el_type)  
   bundle.classList.add("builded-" + bundle_data.bundle_name) // !!! remove
   bundle.dataset.bundle_name = bundle_data.bundle_name
   bundle.dataset.location_name = bundle_data.location_name
@@ -22,6 +22,6 @@ export function init_interrupter(bundle, bundle_data) {
   bundle_data.listener_interrupters.set(bundle, controller)
 }
 
-export function smart_event_listener(type, callback, bundle, bundle_data) {
-  bundle.addEventListener(type, callback, { "signal" : bundle_data.listener_interrupters.get(bundle).signal })
+export function smart_event_listener(type, callback, bundle, bundle_data, attach_listener_to) {
+  (attach_listener_to ?? bundle).addEventListener(type, callback, { "signal" : bundle_data.listener_interrupters.get(bundle).signal })
 }

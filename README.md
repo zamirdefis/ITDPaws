@@ -36,8 +36,3 @@ _Don't forget to set "Externals -> Update Interval -> always" in Tampermonkey se
 🗂️ Why is this necessary? Tampermonkey now has access to the project folder, and you can edit it in your IDE. When you reload the page, all changes will be applied to the script
 
 _P.S. Yes, the extension works through Tampermonkey, but I also plan to make it a full-fledged browser extension_
-## Current issues ⚠️
-
-- The extension has critical memory leak issues due to poor architecture
-- Unreachable code error in fresh_fetch() (too lazy to fix it for now)
-- Removed method \#apply_overhead\_ in bundle_t (this bro needs to be returned)

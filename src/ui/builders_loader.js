@@ -1,7 +1,7 @@
 import * as els from "./els.js"
 
 export async function load() {
-  const modules = [ "navbar", "post_actions"]
+  const modules = [ "navbar", "post_actions", "char_counter"]
   for (const path of modules) {
     const module = await import("./builders/" + path + ".js")
     const builder_name = path.split('/').pop().replace('.js', '')

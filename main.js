@@ -105,8 +105,15 @@ import * as ui from "./src/ui/ui.js"
         })
       })
 
-
-      
+      ui.els.location.create("textarea_loc", ".create-post__textarea, .comment-input-field, .wall-post-form__textarea", ui.els.location.types.dynamic)
+        .then( (res) => {
+          ui.els.bundle.create("char_counter", "textarea_loc", {
+            builder_name: "char_counter"
+          })
+        })
+        .catch( (res) => {
+          console.log(res)
+        } )
 
       ui.els.location.create("navbar", ".sidebar-nav", ui.els.location.types.dynamic)
         .then( (result) => {

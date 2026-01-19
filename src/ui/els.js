@@ -37,28 +37,11 @@ class location_t {
       "overhead_handler_c" : overhead_handler_c
     }
     storage.set(name, location)
-    if (type == this.types.static) {
-      waiter.weak(selector, (root) => {
-        location["root"] = root
-        for (const bundle_data of location["bundles"].values()) {
-          const bundle = builder.build(bundle_data.builder_name, bundle_data)
-          if (!bundle) {
-            console.warn(`Broken builder : ${bundle_data.bundle_name}`)
-            return
-          }
-          root.appendChild(bundle)
-        }
-      })
-    } else if (type == this.types.dynamic) {
+    if (type == this.types.dynamic) {
       waiter.strong(name, selector, (root) => {
         for (const bundle_data of location["bundles"].values()) {
           if (bundle_data.disabled) { continue; }
-          const bundle = builder.build(bundle_data.builder_name, bundle_data)
-          if (!bundle) {
-            console.warn(`Broken builder : ${bundle_data.bundle_name}`)
-            return
-          }
-          root.appendChild(bundle)
+          builder.build(bundle_data.builder_name, {bundle_data: bundle_data, root: root})
         }
       })
     }
@@ -71,19 +54,12 @@ class location_t {
   apply_to_existing_ = async (location_name, bundle_name) => {
     const loc_ref = this.get(location_name)
     const bundle_data = loc_ref.bundles.get(bundle_name)
-    if (bundle_data.disabled) {
-      return;
-    }
+    if (bundle_data.disabled) { return; }
     document.querySelectorAll(loc_ref.selector).forEach( (root) => {
       if (root.querySelector(".builded-" + bundle_data.bundle_name)) {
         return;
       }
-      const bundle = builder.build(bundle_data.builder_name, bundle_data)
-      if (!bundle) {
-        console.warn(`Broken builder : ${bundle_data.bundle_name}`)
-        return
-      }
-      root.appendChild(bundle)
+      builder.build(bundle_data.builder_name, {bundle_data: bundle_data, root: root})
     })
   }
   static destruct = (location_name) => {
@@ -118,15 +94,7 @@ class bundle_t {
     const loc_ref = location.get(location_name)
     loc_ref.bundles.set(bundle_name, bundle_data)
     // this.#apply_overhead_(location_name, bundle_template) fix it
-    if (loc_ref.type == location.types.static && loc_ref.root) {
-      const bundle = builder.build(bundle_data.builder_name, bundle_data)
-      if (!bundle) {
-        console.warn(`Broken builder : ${bundle_data.bundle_name}`)
-        return
-      }
-    } else {
-       location.apply_to_existing_(location_name, bundle_name)
-    }
+    location.apply_to_existing_(location_name, bundle_name)
   }
 
   disable = (bundle_name, location_name) => {
