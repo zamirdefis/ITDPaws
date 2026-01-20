@@ -1,4 +1,21 @@
 
+function get_signal(bundle, bundle_data) {
+  const signal = bundle_data.listener_interrupters.get(bundle).signal
+  if (!signal) { console.error("Unable to receive interrupt signal at bundle : ", bundle) }
+  return signal
+}
+
+export function smart_interval(callback, delay, bundle, bundle_data) {
+  const signal = get_signal(bundle, bundle_data)
+  if (signal?.aborted) return;
+
+  const id = setInterval(callback, delay);
+
+  signal?.addEventListener('abort', () => {
+    clearInterval(id);
+  }, { once: true });
+}
+
 const createElement = (name) => {
   const el = document.createElement(name)
   el.classList.add("itd-paws")
@@ -23,5 +40,5 @@ export function init_interrupter(bundle, bundle_data) {
 }
 
 export function smart_event_listener(type, callback, bundle, bundle_data, attach_listener_to) {
-  (attach_listener_to ?? bundle).addEventListener(type, callback, { "signal" : bundle_data.listener_interrupters.get(bundle).signal })
+  (attach_listener_to ?? bundle).addEventListener(type, callback, { "signal" : get_signal(bundle, bundle_data) })
 }
