@@ -16,7 +16,7 @@ import * as ui from "./src/ui/ui.js"
 
   ui.builders_loader.load()
     .then((res) => {
-      ui.els.location.create("post_actions_loc", ".post-actions-right", ui.els.location.types.dynamic).then( (res) => {
+      ui.els.location.create("post_actions_loc", ".post-actions-right").then( (res) => {
         ui.els.bundle.create("test_btn", "post_actions_loc", { 
           builder_name: "post_actions",
           on_click_c : (is_pressed, btn) => { 
@@ -105,7 +105,7 @@ import * as ui from "./src/ui/ui.js"
         })
       })
 
-      ui.els.location.create("textarea_loc", ".create-post__textarea, .comment-input-field, .wall-post-form__textarea", ui.els.location.types.dynamic)
+      ui.els.location.create("textarea_loc", ".create-post__textarea, .comment-input-field, .wall-post-form__textarea")
         .then( (res) => {
           ui.els.bundle.create("char_counter", "textarea_loc", {
             builder_name: "char_counter"
@@ -115,7 +115,7 @@ import * as ui from "./src/ui/ui.js"
           console.log(res)
         } )
 
-      ui.els.location.create("navbar", ".sidebar-nav", ui.els.location.types.dynamic)
+      ui.els.location.create("navbar", ".sidebar-nav")
         .then( (result) => {
           // const leak_test = async () => {
           //   while (true) {
@@ -179,11 +179,11 @@ import * as ui from "./src/ui/ui.js"
   
   
   
-      // ui.els.location.create("create_post", ".create-post, .wall-post-form", ui.els.location.types.dynamic)
-      // ui.els.location.create("post_menu_btn", ".post-menu-btn", ui.els.location.types.dynamic)
-      // ui.els.location.create("clans", ".clan-item", ui.els.location.types.dynamic)
+      // ui.els.location.create("create_post", ".create-post, .wall-post-form")
+      // ui.els.location.create("post_menu_btn", ".post-menu-btn")
+      // ui.els.location.create("clans", ".clan-item")
       //
-      // ui.els.location.create("clans", ".clan-item", ui.els.location.types.dynamic)
+      // ui.els.location.create("clans", ".clan-item")
 
       
       // ui.els.bundle.create("test_btn", "actions", { builder_name: "nvbar_btn", color: "#00ff00", on_click_c : () => { console.log(321)} })

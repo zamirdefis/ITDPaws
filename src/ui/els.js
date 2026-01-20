@@ -13,11 +13,6 @@ const storage = new Map()
 
 class location_t {
 
-  types = Object.freeze({
-    static : 0,
-    dynamic: 1
-  })
-
   get = (location_name) => {
     if (storage.has(location_name)) {
       return storage.get(location_name)
@@ -25,32 +20,26 @@ class location_t {
     return false
   }
 
-  create = async (name, selector, type = this.types.dynamic, overhead_handler_c = () => {}) => {
+  create = async (name, selector) => {
     if (storage.has(name)) {
       return new Error("Location with this name already exists")
     }
+
     const location = {
-      "root" : false,
       "bundles" : new Map(),
       "selector" : selector,
-      "type" : type,
-      "overhead_handler_c" : overhead_handler_c
     }
     storage.set(name, location)
-    if (type == this.types.dynamic) {
-      waiter.strong(name, selector, (root) => {
-        for (const bundle_data of location["bundles"].values()) {
-          if (bundle_data.disabled) { continue; }
-          builder.build(bundle_data.builder_name, {bundle_data: bundle_data, root: root})
-        }
-      })
-    }
+
+    waiter.strong(name, selector, (root) => {
+      for (const bundle_data of location["bundles"].values()) {
+        if (bundle_data.disabled) { continue; }
+        builder.build(bundle_data.builder_name, {bundle_data: bundle_data, root: root})
+      }
+    })
     return true
   }
-  // потом крч перебираем все бандлы и apply к ним
-  // при disable удаляем бандлы. при enable вызываем apply_to_existing
-  // и надо еще параметр сделать в bundle_data типо disable/enable
-  // не забудь в post_actions builder'е добавить класс
+  // не забудь в post_actions builder'е добавить класс (хз про что я писал, может вспомню когда-нибудь -_-) !!!
   apply_to_existing_ = async (location_name, bundle_name) => {
     const loc_ref = this.get(location_name)
     const bundle_data = loc_ref.bundles.get(bundle_name)
@@ -79,12 +68,7 @@ class bundle_t {
     toggle : 1,
     radio : 2
   })
-  // #apply_overhead_ = (location_name, bundle_template) => {
-  //   const ohh = location.get(location_name).overhead_handler_c
-  //   if (!ohh) { return false }
-  //   ohh(bundle_template)
-  //   return true
-  // } // fix it
+  
   #process_new_bundle_ = (bundle_name, location_name, bundle_data) => {
     // auto params
     bundle_data.bundle_name = bundle_name
@@ -93,7 +77,6 @@ class bundle_t {
 
     const loc_ref = location.get(location_name)
     loc_ref.bundles.set(bundle_name, bundle_data)
-    // this.#apply_overhead_(location_name, bundle_template) fix it
     location.apply_to_existing_(location_name, bundle_name)
   }
 
@@ -102,9 +85,7 @@ class bundle_t {
     if (bundle_data.disabled) { return }
     bundle_data.disabled = true
     document.querySelectorAll(".builded-" + bundle_name).forEach((bundle) => {
-      // bundle.onclick = null
       bundle.remove()
-      // for test: (remove it)
     })
   }
   enable = (bundle_name, location_name) => {
