@@ -1,3 +1,4 @@
+import * as elc from "../../el_creator.js"
 
 function get_signal(bundle, bundle_data) {
   const signal = bundle_data.listener_interrupters.get(bundle).signal
@@ -16,14 +17,8 @@ export function smart_interval(callback, delay, bundle, bundle_data) {
   }, { once: true });
 }
 
-const createElement = (name) => {
-  const el = document.createElement(name)
-  el.classList.add("itd-paws")
-  return el
-}
-
 export function init_bundle(el_type, bundle_data) {
-  const bundle = createElement(el_type)  
+  const bundle = elc.createElement(el_type)  
   bundle.classList.add("builded-" + bundle_data.bundle_name) // !!! remove
   bundle.dataset.bundle_name = bundle_data.bundle_name
   bundle.dataset.location_name = bundle_data.location_name

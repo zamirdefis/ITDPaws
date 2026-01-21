@@ -3,6 +3,101 @@ import * as vars from "../vars.js"
 export const inject = async () => {
   const style_navbar = document.createElement("style")
   style_navbar.textContent = `
+
+.menu-header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Тонкая линия */
+  position: relative;
+}
+
+.menu-title {
+    color: var(--color-text);
+}
+
+.close-btn {
+  position: absolute;
+  right: 8px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+    line-height: 1;
+    width: 100%px;
+  height: 100%;
+}
+
+.close-btn svg {
+  width: 60%;
+  height: 60%;
+}
+
+.close-btn:hover {
+    color: #ff4d4d;
+}
+
+
+.menu-body {
+  display: flex;
+  flex-direction: column;
+    overflow-y: scroll;
+
+
+}
+
+.btn-wrapper {
+position: relative;
+  height: 40px;
+width: 100%;
+margin-top: 10px;
+background-color: #ffffff;
+}
+
+
+.itd-paws-menu {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 42%;
+    height: 95%;
+    border: 2px solid color-mix(in srgb, var(--color-text), transparent 85%);
+    background-color: color-mix(in srgb, var(--color-background), transparent 4%); 
+    backdrop-filter: blur(10px); 
+    //display: flex;
+    //flex-direction: column;
+    //justify-content: center;
+    //align-items: center;
+    z-index: 9999;
+    
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.itd-paws-menu-wrapper {
+  visibility: hidden;
+  top: 0;
+  left: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+}
+
+.itd-paws-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+
 .post-views {
   flex-grow: 1
 }

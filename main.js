@@ -1,16 +1,42 @@
-// import * as vars from "./src/vars.js"
 import * as network from "./src/network.js"
 import * as waiter from "./src/waiter.js"
 import * as ui from "./src/ui/ui.js"
+import * as elc from "./src/ui/el_creator.js"
 
 (function() {
   'use strict';
   ui.style.inject()
   waiter.init_strong_global_listener()
-  // bundles.post_handler.init()
 
   ui.highlight.load()
   ui.els.init_interrupt_manager()
+
+
+  const menu = new ui.editor.panel_t("ITDPaws", () => {
+    document.querySelector(".itd-paws[data-bundle_name=\"menu_btn\"][data-location_name=\"navbar\"]").click()
+  })
+  menu.create_el("btn_1", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_2", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_3", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
 
   console.log("ITDPaws!")
 
@@ -24,13 +50,13 @@ import * as ui from "./src/ui/ui.js"
             const create_code_block = (json) => {
               const data = JSON.stringify(json.data, null, 2)
 
-              const pre = ui.createElement('pre')
-              const code = ui.createElement('code')
+              const pre = elc.createElement('pre')
+              const code = elc.createElement('code')
 
-              const wrapper = ui.createElement("div")
+              const wrapper = elc.createElement("div")
               wrapper.className = "code-block-wrapper"
 
-              const copy_btn = ui.createElement("button")
+              const copy_btn = elc.createElement("button")
               copy_btn.className = "code-copy-button"
               copy_btn.innerHTML = ui.icon_manager.get("copy") 
 
@@ -148,25 +174,13 @@ import * as ui from "./src/ui/ui.js"
             type : ui.els.btn_type_e.toggle,
             icon : ["🫣", "😑"]
           })
-          ui.els.bundle.create("test_btn3", "navbar", {
+          ui.els.bundle.create("menu_btn", "navbar", {
             builder_name: "navbar",
             on_click_c : (is_pressed) => { console.log("btn3 : ", is_pressed)
-
+              menu.get_root().classList.toggle('active');
             },
             type : ui.els.btn_type_e.toggle,
-            icon : [ "🦊", "🐺" ],
-            activated : true
-          })
-          ui.els.bundle.create("test_btn4", "navbar", {
-            builder_name: "navbar",
-            on_click_c : (is_pressed) => { console.log("btn4 : ", is_pressed)
-
-
-
-            },
-            type : ui.els.btn_type_e.single,
-            icon : "🙄",
-            activated : true
+            icon : [ "🐺", "🦊" ],
           })
         })
 
