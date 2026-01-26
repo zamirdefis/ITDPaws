@@ -51,11 +51,31 @@ export class panel_t {
   // desc
   //
   create_el = (el_name, el_class_name, data) => {
+    const el_wrapper = elc.createElement("div")
+    el_wrapper.classList.add("el-wrapper")
     if (el_class_name === el_class_name_e.button) {
-      const btn_wrapper = elc.createElement("div")
-      btn_wrapper.classList.add("btn-wrapper")
-      btn_wrapper.classList.add("in-body")
-      this.#body_.appendChild(btn_wrapper)
+
+      const el_title_wrapper = elc.createElement("div")
+      el_title_wrapper.classList.add("el-title-wrapper")
+      el_wrapper.appendChild(el_title_wrapper)
+      
+      const btn = elc.createElement("button")
+      btn.classList.add("menu-btn")
+      el_title_wrapper.appendChild(btn)
+      
+      const btn_title = elc.createElement("div")
+      btn_title.classList.add("btn-title")
+      btn_title.textContent = data.title ?? "NONE"
+      el_title_wrapper.appendChild(btn_title)
+
+      btn.onclick = () => {
+        btn.classList.toggle("active");
+        if (data.on_click_c) {
+          data.on_click_c(btn.classList.contains("active"))
+        }
+      }
+      
+      this.#body_.appendChild(el_wrapper)
       return
     }
   }

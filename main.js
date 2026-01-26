@@ -15,28 +15,14 @@ import * as elc from "./src/ui/el_creator.js"
   const menu = new ui.editor.panel_t("ITDPaws", () => {
     document.querySelector(".itd-paws[data-bundle_name=\"menu_btn\"][data-location_name=\"navbar\"]").click()
   })
-  menu.create_el("btn_1", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_2", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_3", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
-  menu.create_el("btn_4", ui.editor.el_class_name_e.button, {})
+  menu.create_el("btn_1", ui.editor.el_class_name_e.button, {
+    on_click_c : (state) => {console.log(state)},
+    title: "View Post JSON"
+  })
+  menu.create_el("btn_2", ui.editor.el_class_name_e.button, {
+    on_click_c : (state) => {console.log(state)},
+    title: "Get Bearer Token"
+  })
 
   console.log("ITDPaws!")
 

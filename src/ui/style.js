@@ -4,6 +4,70 @@ export const inject = async () => {
   const style_navbar = document.createElement("style")
   style_navbar.textContent = `
 
+:root {
+--main-color: color-mix(in srgb, var(--color-text), transparent 85%);
+--tbg-color: color-mix(in srgb, var(--color-background), transparent 4%);
+--bg-color: var(--color-background);
+--el-bg-color: #1f1e21;
+--menu-btn-active-color: #e7e7e7;
+--menu-btn-bg-color: #100f11;
+--menu-btn-hover-color: #7d7d7d; 
+--menu-btn-hover-bg-color: rgba(255, 255, 255, 0.1);
+--menu-btn-shadow-color: color-mix(in srgb, var(--menu-btn-active-color), transparent 4%);
+--menu-btn-title-font-size: 20px;
+--menu-btn-title-text-color: color-mix(in srgb, var(--color-text), transparent 60%);
+}
+
+.itd-paws.btn-title {
+position: relative;
+margin-left: auto;
+font-size: var(--menu-btn-title-font-size);
+color: var(--menu-btn-title-text-color);
+}
+
+.itd-paws.el-title-wrapper {
+position: relative;
+width: 100%;
+display: flex;
+flex-direction: rows;
+align-items: center;
+}
+
+.itd-paws.menu-btn {
+  position: relative;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  
+  background-color: var(--menu-btn-bg-color);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.itd-paws.menu-btn:hover {
+  background-color: var(--menu-btn-hover-color);
+  transform: scale(1.05);
+  box-shadow: 0 0px 10px var(--menu-btn-shadow-color);
+}
+
+.itd-paws.menu-btn:active {
+  // transform: scale(0.95);
+  background-color: var(--menu-btn-active-bg-color);
+  box-shadow: 0px 0px 7px var(--menu-btn-shadow-color);
+}
+
+.itd-paws.menu-btn.active {
+  background-color: var(--menu-btn-active-color);
+  box-shadow: 0px 0px 10px 2px var(--menu-btn-shadow-color);
+}
+
 .menu-header {
     display: flex;
     justify-content: center;
@@ -42,18 +106,20 @@ export const inject = async () => {
 .menu-body {
   display: flex;
   flex-direction: column;
-    overflow-y: scroll;
-
-
+  overflow-y: scroll;
+  padding-inline: 10px;
 }
 
-.btn-wrapper {
-position: relative;
-  height: 40px;
-width: 100%;
-margin-top: 10px;
-background-color: #ffffff;
+.menu-body > * {
+  flex-shrink: 0;
+  background-color: var(--el-bg-color);
+  width: 100%;
+  margin-top: 10px;
+  position: relative;
+  border-radius: 10px;
+  padding: 10px;
 }
+
 
 
 .itd-paws-menu {
@@ -65,8 +131,8 @@ background-color: #ffffff;
     border: 2px solid color-mix(in srgb, var(--color-text), transparent 85%);
     background-color: color-mix(in srgb, var(--color-background), transparent 4%); 
     backdrop-filter: blur(10px); 
-    //display: flex;
-    //flex-direction: column;
+    display: flex;
+    flex-direction: column;
     //justify-content: center;
     //align-items: center;
     z-index: 9999;
