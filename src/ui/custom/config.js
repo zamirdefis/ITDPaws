@@ -14,7 +14,7 @@ export function get_initial() {
   return localStorage.getItem(initial_cfg_key) ?? "default"
 }
 
-function refresh() {
+export function apply() {
   const btns = document.querySelectorAll(".itd-paws.menu-btn.cfg-member")
   btns.forEach( (btn) => {
     if (Object.hasOwn(cur_cfg, btn.dataset.cfg_name)) {
@@ -61,7 +61,6 @@ export function load(cfg_name) {
       return false
     }
     cur_cfg = new_cur_cfg
-    refresh()
     return true
   }
   console.error(`Config "${real_cfg_name}" not found`)

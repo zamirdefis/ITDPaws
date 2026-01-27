@@ -20,7 +20,6 @@ export const inject = async () => {
 
 .itd-paws.btn-title {
 position: relative;
-margin-left: auto;
 font-size: var(--menu-btn-title-font-size);
 color: var(--menu-btn-title-text-color);
 }
@@ -38,6 +37,8 @@ align-items: center;
   height: 45px;
   width: 45px;
   border-radius: 50%;
+
+margin-left: auto;
   
   display: flex;
   align-items: center;

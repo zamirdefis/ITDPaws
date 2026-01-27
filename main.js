@@ -7,10 +7,10 @@ import * as cfg from "./src/ui/custom/config.js"
 (function() {
   'use strict';
   ui.style.inject()
-  waiter.init_strong_global_listener()
-
   ui.highlight.load()
+
   ui.els.init_interrupt_manager()
+  waiter.init_strong_global_listener()
 
 
   const menu = new ui.editor.panel_t("ITDPaws", () => {
@@ -22,7 +22,8 @@ import * as cfg from "./src/ui/custom/config.js"
     cfg.save("first")
   })
   
-
+  cfg.init()
+  
   console.log("ITDPaws!")
 
   ui.builders_loader.load()
@@ -170,12 +171,12 @@ import * as cfg from "./src/ui/custom/config.js"
                 ui.els.bundle.toggle_disabled("bearer_token_extractor", "navbar_loc")
               }
             },
-            title: "Bearer Token Extractor"
+            activated : cfg.get_field("bearer_token_extractor"),
+            title : "Bearer Token Extractor"
           })
         })
     })
     .catch((res) => {
       console.log(res)
     })
-  cfg.init()
 })();
