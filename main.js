@@ -21,30 +21,7 @@ import * as cfg from "./src/ui/custom/config.js"
     cfg.save_changes()
     cfg.save("first")
   })
-  menu.create_el("post_json_viewer", ui.editor.el_class_name_e.button, {
-    on_click_c : (state) => {console.log(state)},
-    title: "Post JSON Viewer"
-  })
-  menu.create_el("post_id_copy_button", ui.editor.el_class_name_e.button, {
-    on_click_c : (state) => {console.log(state)},
-    title: "Post Id Copy Button"
-  })
-  menu.create_el("bearer_token_extractor", ui.editor.el_class_name_e.button, {
-    on_click_c : (state) => {
-      if (state) {
-        ui.els.bundle.enable("bearer_token_extractor", "navbar_loc") 
-      } else {
-        ui.els.bundle.disable("bearer_token_extractor", "navbar_loc") 
-      }
-    },
-    title: "Bearer Token Extractor"
-  })
-  menu.create_el("char_counter", ui.editor.el_class_name_e.button, {
-    on_click_c : (state) => {console.log(state)},
-    title: "Char Counter"
-  })
-
-  cfg.init()
+  
 
   console.log("ITDPaws!")
 
@@ -137,6 +114,20 @@ import * as cfg from "./src/ui/custom/config.js"
           },
           disabled : true
         })
+
+        menu.create_el("post_json_viewer", ui.editor.el_class_name_e.button, {
+          on_click_c : (state) => {console.log(state)},
+          title: "Post JSON Viewer"
+        })
+        menu.create_el("post_id_copy_button", ui.editor.el_class_name_e.button, {
+          on_click_c : (state) => {console.log(state)},
+          title: "Post Id Copy Button"
+        })
+
+        menu.create_el("char_counter", ui.editor.el_class_name_e.button, {
+          on_click_c : (state) => {console.log(state)},
+          title: "Char Counter"
+        })
       })
 
       ui.els.location.create("textarea_loc", ".create-post__textarea, .comment-input-field, .wall-post-form__textarea")
@@ -171,47 +162,20 @@ import * as cfg from "./src/ui/custom/config.js"
             type : ui.els.btn_type_e.toggle,
             icon : [ "🐺", "🦊" ],
           })
+
+          menu.create_el("bearer_token_extractor", ui.editor.el_class_name_e.button, {
+            on_click_c : (state) => {
+              if (!ui.els.bundle.exists("bearer_token_extractor", "navbar_loc")) { return; }
+              if (ui.els.bundle.get_state("bearer_token_extractor", "navbar_loc") !== state) {
+                ui.els.bundle.toggle_disabled("bearer_token_extractor", "navbar_loc")
+              }
+            },
+            title: "Bearer Token Extractor"
+          })
         })
     })
     .catch((res) => {
       console.log(res)
     })
-
-  
-  
-  
-      // ui.els.location.create("create_post", ".create-post, .wall-post-form")
-      // ui.els.location.create("post_menu_btn", ".post-menu-btn")
-      // ui.els.location.create("clans", ".clan-item")
-      //
-      // ui.els.location.create("clans", ".clan-item")
-
-      
-      // ui.els.bundle.create("test_btn", "actions", { builder_name: "nvbar_btn", color: "#00ff00", on_click_c : () => { console.log(321)} })
-      // ui.els.bundle.create("test_btn", "create_post", { builder_name: "button", color: "#ff00ff", on_click_c : () => { console.log(321)} })
-      // ui.els.bundle.create("test_btn", "post_menu_btn", { builder_name: "button", color: "#0000ff", on_click_c : () => { console.log(321)} })
-      // ui.els.bundle.create("test_btn", "clans", { builder_name: "button", color: "#ffffff", on_click_c : () => { console.log(321)} })
-  
-
-  // ui.navbar_entity_t.init()
-  //
-  // ui.navbar_entity_t.new_button("get_new_token", () => {
-  //   network.get_new_token().then(local_token => {
-  //     navigator.clipboard.writeText(local_token)
-  //   })
-  // }, new ui.nav_bar_btn_data_t("🔐") )
-  //
-  // ui.navbar_entity_t.new_button("settings", (is_pressed) => {
-  //   console.log(is_pressed)
-  //   // Nothing yet, but the extension menu should open here :P
-  // }, new ui.nav_bar_btn_data_t(["⚙", "✖"], ui.BTN_TYPE_E.TOGGLE))
-
-  // ui.navbar_entity_t.new_button("test", (is_pressed) => {
-  //   console.log("test")
-  // }, new ui.nav_bar_btn_data_t(["💅", "😐"], ui.BTN_TYPE_E.TOGGLE, true))
-  //
-  // ui.navbar_entity_t.new_button("test2", (is_pressed) => {
-  //   console.log("test2")
-  // }, new ui.nav_bar_btn_data_t("😇", ui.BTN_TYPE_E.TOGGLE, false))
-  
+  cfg.init()
 })();

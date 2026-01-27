@@ -17,6 +17,7 @@ class location_t {
     if (storage.has(location_name)) {
       return storage.get(location_name)
     }
+    console.error(`Location "${location_name}" not found`)
     return false
   }
 
@@ -88,11 +89,40 @@ class bundle_t {
       bundle.remove()
     })
   }
+  exists = (bundle_name, location_name) => {
+    const loc_ref = location.get(location_name)
+    if (!loc_ref) { return false; }
+    const bundle_data = loc_ref.bundles.get(bundle_name)
+    return bundle_data ? true : false
+  }
   enable = (bundle_name, location_name) => {
     const bundle_data = location.get(location_name).bundles.get(bundle_name)
     if (!bundle_data.disabled) { return }
     bundle_data.disabled = false
     location.apply_to_existing_(location_name, bundle_name)
+  }
+  get_state = (bundle_name, location_name) => {
+    const bundle_data = location.get(location_name).bundles.get(bundle_name)
+    if (!bundle_data) {
+      console.error(`Unknown bundle : "${bundle_name}" in location : "${location_name}"`)
+      return false
+    }
+    if (bundle_data.disabled) { 
+      return false
+    }
+    return true
+  }
+  toggle_disabled = (bundle_name, location_name) => {
+    const bundle_data = location.get(location_name).bundles.get(bundle_name)
+    if (!bundle_data) {
+      console.error(`Unknown bundle : "${bundle_name}" in location : "${location_name}"`)
+      return false
+    }
+    if (bundle_data.disabled) { 
+      this.enable(bundle_name, location_name)
+      return
+    }
+    this.disable(bundle_name, location_name)
   }
   
   create = (bundle_name, location_name, data = {},) => {

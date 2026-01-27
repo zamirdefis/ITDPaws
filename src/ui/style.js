@@ -14,7 +14,7 @@ export const inject = async () => {
 --menu-btn-hover-color: #7d7d7d; 
 --menu-btn-hover-bg-color: rgba(255, 255, 255, 0.1);
 --menu-btn-shadow-color: color-mix(in srgb, var(--menu-btn-active-color), transparent 4%);
---menu-btn-title-font-size: 20px;
+--menu-btn-title-font-size: 17px;
 --menu-btn-title-text-color: color-mix(in srgb, var(--color-text), transparent 60%);
 }
 
