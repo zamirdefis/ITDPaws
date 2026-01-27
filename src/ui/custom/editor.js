@@ -60,7 +60,8 @@ export class panel_t {
       el_wrapper.appendChild(el_title_wrapper)
       
       const btn = elc.createElement("button")
-      btn.classList.add("menu-btn")
+      btn.classList.add("menu-btn", "cfg-member")
+      btn.dataset.cfg_name = el_name
       el_title_wrapper.appendChild(btn)
       
       const btn_title = elc.createElement("div")

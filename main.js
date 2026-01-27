@@ -2,6 +2,7 @@ import * as network from "./src/network.js"
 import * as waiter from "./src/waiter.js"
 import * as ui from "./src/ui/ui.js"
 import * as elc from "./src/ui/el_creator.js"
+import * as cfg from "./src/ui/custom/config.js"
 
 (function() {
   'use strict';
@@ -13,16 +14,37 @@ import * as elc from "./src/ui/el_creator.js"
 
 
   const menu = new ui.editor.panel_t("ITDPaws", () => {
-    document.querySelector(".itd-paws[data-bundle_name=\"menu_btn\"][data-location_name=\"navbar\"]").click()
+    document.querySelector(".itd-paws[data-bundle_name=\"menu_btn\"][data-location_name=\"navbar_loc\"]").click()
+    if (cfg.get_initial() === "default") {
+      cfg.set_initial("first")
+    }
+    cfg.save_changes()
+    cfg.save("first")
   })
-  menu.create_el("btn_1", ui.editor.el_class_name_e.button, {
+  menu.create_el("post_json_viewer", ui.editor.el_class_name_e.button, {
     on_click_c : (state) => {console.log(state)},
-    title: "View Post JSON"
+    title: "Post JSON Viewer"
   })
-  menu.create_el("btn_2", ui.editor.el_class_name_e.button, {
+  menu.create_el("post_id_copy_button", ui.editor.el_class_name_e.button, {
     on_click_c : (state) => {console.log(state)},
-    title: "Get Bearer Token"
+    title: "Post Id Copy Button"
   })
+  menu.create_el("bearer_token_extractor", ui.editor.el_class_name_e.button, {
+    on_click_c : (state) => {
+      if (state) {
+        ui.els.bundle.enable("bearer_token_extractor", "navbar_loc") 
+      } else {
+        ui.els.bundle.disable("bearer_token_extractor", "navbar_loc") 
+      }
+    },
+    title: "Bearer Token Extractor"
+  })
+  menu.create_el("char_counter", ui.editor.el_class_name_e.button, {
+    on_click_c : (state) => {console.log(state)},
+    title: "Char Counter"
+  })
+
+  cfg.init()
 
   console.log("ITDPaws!")
 
@@ -127,50 +149,29 @@ import * as elc from "./src/ui/el_creator.js"
           console.log(res)
         } )
 
-      ui.els.location.create("navbar", ".sidebar-nav")
+      ui.els.location.create("navbar_loc", ".sidebar-nav")
         .then( (result) => {
-          // const leak_test = async () => {
-          //   while (true) {
-          //     waiter.sleep(100)
-          //     if (teeest) {
-          //       ui.els.bundle.enable("disable_test", "post_actions_loc") 
-          //     } else {
-          //       ui.els.bundle.disable("disable_test", "post_actions_loc") 
-          //     }
-          //     teeest = !teeest
-          //   }
-          //
-          // }
-          // leak_test()
-          ui.els.bundle.create("test_btn", "navbar", { 
+          ui.els.bundle.create("bearer_token_extractor", "navbar_loc", {
             builder_name: "navbar",
-            on_click_c : (is_pressed) => { console.log(123)
-              if (is_pressed) {
-                ui.els.bundle.enable("disable_test", "post_actions_loc") 
-              } else {
-                ui.els.bundle.disable("disable_test", "post_actions_loc") 
-              }
+            on_click_c : (is_pressed) => {
+              network.get_new_token().then(local_token => {
+                navigator.clipboard.writeText(local_token)
+              })
             },
-            type: ui.els.btn_type_e.toggle
+            type : ui.els.btn_type_e.single,
+            disabled : !cfg.get_field("bearer_token_extractor"),
+            icon : '🔐',
           })
-          ui.els.bundle.create("test_btn2", "navbar", {
+          
+          ui.els.bundle.create("menu_btn", "navbar_loc", {
             builder_name: "navbar",
-            on_click_c : (is_pressed) => { console.log("btn2 : ", is_pressed)
-            },
-            type : ui.els.btn_type_e.toggle,
-            icon : ["🫣", "😑"]
-          })
-          ui.els.bundle.create("menu_btn", "navbar", {
-            builder_name: "navbar",
-            on_click_c : (is_pressed) => { console.log("btn3 : ", is_pressed)
+            on_click_c : (is_pressed) => {
               menu.get_root().classList.toggle('active');
             },
             type : ui.els.btn_type_e.toggle,
             icon : [ "🐺", "🦊" ],
           })
         })
-
-      
     })
     .catch((res) => {
       console.log(res)
