@@ -2,7 +2,8 @@ import * as elc from "../el_creator.js"
 import * as icon_manager from "../icon_manager.js"
 
 export const el_class_name_e = Object.freeze({
-  button : 0 
+  button : 0,
+  tab : 1
 })
 
 export class panel_t {
@@ -51,6 +52,10 @@ export class panel_t {
   // desc
   //
   create_el = (el_name, el_class_name, data) => {
+    if (el_class_name === el_class_name_e.tab) {
+      
+      return
+    }
     const el_wrapper = elc.createElement("div")
     el_wrapper.classList.add("el-wrapper")
     if (el_class_name === el_class_name_e.button) {
@@ -81,10 +86,8 @@ export class panel_t {
       if (data.activated) {
         btn.click()
       }
-      
-      this.#body_.appendChild(el_wrapper)
-      return
     }
+    this.#body_.appendChild(el_wrapper)
   }
 }
 

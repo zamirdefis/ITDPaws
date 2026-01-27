@@ -116,19 +116,19 @@ import * as cfg from "./src/ui/custom/config.js"
           disabled : true
         })
 
-        menu.create_el("post_json_viewer", ui.editor.el_class_name_e.button, {
-          on_click_c : (state) => {console.log(state)},
-          title: "Post JSON Viewer"
-        })
-        menu.create_el("post_id_copy_button", ui.editor.el_class_name_e.button, {
-          on_click_c : (state) => {console.log(state)},
-          title: "Post Id Copy Button"
-        })
-
-        menu.create_el("char_counter", ui.editor.el_class_name_e.button, {
-          on_click_c : (state) => {console.log(state)},
-          title: "Char Counter"
-        })
+        // menu.create_el("post_json_viewer", ui.editor.el_class_name_e.button, {
+        //   on_click_c : (state) => {console.log(state)},
+        //   title: "Post JSON Viewer"
+        // })
+        // menu.create_el("post_id_copy_button", ui.editor.el_class_name_e.button, {
+        //   on_click_c : (state) => {console.log(state)},
+        //   title: "Post Id Copy Button"
+        // })
+        //
+        // menu.create_el("char_counter", ui.editor.el_class_name_e.button, {
+        //   on_click_c : (state) => {console.log(state)},
+        //   title: "Char Counter"
+        // })
       })
 
       ui.els.location.create("textarea_loc", ".create-post__textarea, .comment-input-field, .wall-post-form__textarea")
@@ -164,16 +164,16 @@ import * as cfg from "./src/ui/custom/config.js"
             icon : [ "🐺", "🦊" ],
           })
 
-          menu.create_el("bearer_token_extractor", ui.editor.el_class_name_e.button, {
-            on_click_c : (state) => {
-              if (!ui.els.bundle.exists("bearer_token_extractor", "navbar_loc")) { return; }
-              if (ui.els.bundle.get_state("bearer_token_extractor", "navbar_loc") !== state) {
-                ui.els.bundle.toggle_disabled("bearer_token_extractor", "navbar_loc")
-              }
-            },
-            activated : cfg.get_field("bearer_token_extractor"),
-            title : "Bearer Token Extractor"
-          })
+          // menu.create_el("bearer_token_extractor", ui.editor.el_class_name_e.button, {
+          //   on_click_c : (state) => {
+          //     if (!ui.els.bundle.exists("bearer_token_extractor", "navbar_loc")) { return; }
+          //     if (ui.els.bundle.get_state("bearer_token_extractor", "navbar_loc") !== state) {
+          //       ui.els.bundle.toggle_disabled("bearer_token_extractor", "navbar_loc")
+          //     }
+          //   },
+          //   activated : cfg.get_field("bearer_token_extractor"),
+          //   title : "Bearer Token Extractor"
+          // })
         })
     })
     .catch((res) => {

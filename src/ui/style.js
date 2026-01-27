@@ -7,7 +7,7 @@ export const inject = async () => {
 :root {
 --main-color: color-mix(in srgb, var(--color-text), transparent 85%);
 --tbg-color: color-mix(in srgb, var(--color-background), transparent 4%);
---bg-color: var(--color-background);
+--bg-color: #0C0C0C;
 --el-bg-color: #1f1e21;
 --menu-btn-active-color: #e7e7e7;
 --menu-btn-bg-color: #100f11;
@@ -15,7 +15,12 @@ export const inject = async () => {
 --menu-btn-hover-bg-color: rgba(255, 255, 255, 0.1);
 --menu-btn-shadow-color: color-mix(in srgb, var(--menu-btn-active-color), transparent 4%);
 --menu-btn-title-font-size: 17px;
---menu-btn-title-text-color: color-mix(in srgb, var(--color-text), transparent 60%);
+--menu-title-text-color: color-mix(in srgb, var(--color-text), transparent 40%);
+--menu-btn-title-text-color: var(--menu-title-text-color);
+--menu-border-color: #282828;
+--menu-title-line-vignette-color: #151718;
+--menu-title-bg-color: #1b1b1b;
+--menu-tab-bg-color: var(--menu-title-bg-color);
 }
 
 .itd-paws.btn-title {
@@ -73,12 +78,59 @@ margin-left: auto;
     display: flex;
     justify-content: center;
     width: 100%;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Тонкая линия */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-image-source: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  border-image-slice: 1;
   position: relative;
+  overflow: hidden;
+  background-color: var(--menu-title-bg-color);
+}
+
+.menu-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background:
+linear-gradient(
+    to right, 
+    #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff, #ff0000
+  );
+  background-size: 200% 100%; 
+  animation: rainbow-flow 7s linear infinite;
+}
+.menu-header::before {
+left: 0;
+  bottom: 0;
+  content: "";
+  height: 1px;
+  width: 100%;
+  position: absolute;
+  background: linear-gradient(
+
+    to right, 
+    var(--menu-title-line-vignette-color) 0%, 
+    transparent 20%, 
+    transparent 80%, 
+    var(--menu-title-line-vignette-color) 100%
+  );
+  z-index: 2; /* Маска строго поверх радуги */
+  pointer-events: none; /* Чтобы маска не мешала кликам, если она перекрывает кнопки */
+}
+
+@keyframes rainbow-flow {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
 }
 
 .menu-title {
-    color: var(--color-text);
+    color: var(--menu-title-text-color);
 }
 
 .close-btn {
@@ -129,7 +181,7 @@ margin-left: auto;
     left: 0;
     width: 42%;
     height: 95%;
-    border: 2px solid color-mix(in srgb, var(--color-text), transparent 85%);
+    border: 3px solid var(--menu-border-color);
     background-color: color-mix(in srgb, var(--color-background), transparent 4%); 
     backdrop-filter: blur(10px); 
     display: flex;
