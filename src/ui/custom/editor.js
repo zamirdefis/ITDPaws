@@ -41,6 +41,22 @@ export class panel_t {
     this.#panel_.appendChild(header)
     this.#panel_.appendChild(this.#body_)
 
+    const tab_wrapper = elc.createElement("div")
+    tab_wrapper.classList.add("tab-wrapper")
+    this.#body_.appendChild(tab_wrapper)
+
+    const tab_selector = elc.createElement("div")
+    tab_selector.classList.add("tab-selector")
+    tab_wrapper.appendChild(tab_selector)
+    
+    const ts_tabs = elc.createElement("div")
+    ts_tabs.classList.add("ts-tabs")
+    tab_selector.appendChild(ts_tabs)
+
+    const tab_body = elc.createElement("div")
+    tab_body.classList.add("tab-body")
+    tab_wrapper.appendChild(tab_body)
+
     this.#wrapper_.appendChild(this.#panel_)
     document.body.appendChild(this.#wrapper_)
   }
@@ -53,7 +69,13 @@ export class panel_t {
   //
   create_el = (el_name, el_class_name, data) => {
     if (el_class_name === el_class_name_e.tab) {
-      
+      const tab_btn = elc.createElement("button")
+      tab_btn.classList.add("tab-btn")
+      tab_btn.textContent = data.title ?? el_name ?? "NONE"
+      tab_btn.onclick = () => {
+        tab_btn.classList.toggle("active")
+      }
+      this.#body_.querySelector(".ts-tabs").appendChild(tab_btn)
       return
     }
     const el_wrapper = elc.createElement("div")

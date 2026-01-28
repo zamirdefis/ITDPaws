@@ -21,6 +21,97 @@ export const inject = async () => {
 --menu-title-line-vignette-color: #151718;
 --menu-title-bg-color: #1b1b1b;
 --menu-tab-bg-color: var(--menu-title-bg-color);
+--menu-tab-selector-height: 25px;
+--menu-tab-border-color: var(--menu-border-color);
+--menu-tab-btn-text-color: var(--menu-title-text-color);
+--menu-tab-btn-bg-color: var(--menu-tab-bg-color);
+}
+
+.itd-paws.tab-btn.active {
+animation: btn-tab-active-anim 0.3s ease-out forwards;
+}
+
+.itd-paws.tab-btn.active::after {
+content: "";
+position: absolute;
+left: 0;
+bottom: -10px;
+width: 100%;
+height: 1px;
+background-color: #ff0000;
+opacity: 0;
+animation: btn-tab-line-stay-still 0.3s ease-out forwards,
+btn-tab-line-view 0.3s ease-out forwards;
+z-index: 20000;
+}
+
+@keyframes btn-tab-line-view {
+100% {
+opacity: 1;
+}
+}
+
+@keyframes btn-tab-line-stay-still {
+0% { transform: translateY(0); }
+50% { 
+transform: translateY(calc(-1 * var(--menu-tab-selector-height))); 
+}
+100% { 
+transform: translateY(0);
+}
+}
+
+@keyframes btn-tab-active-anim {
+50% { transform: translateY(var(--menu-tab-selector-height)); }
+100% {
+background-color: var(--menu-tab-btn-bg-color);
+border-style: solid;
+border-color: var(--menu-tab-border-color);
+border-width: 2px 2px 0 2px;
+transform: translateY();
+z-index: 100;
+}
+}
+
+.itd-paws.tab-btn {
+position: relative;
+margin-top: 1px;
+padding-inline: 4px;
+height: 100%;
+margin-right: 8px;
+color: var(--menu-tab-btn-text-color);
+border: none;
+background: none;
+outline: none;
+}
+
+.itd-paws.ts-tabs {
+display: flex;
+position: relative;
+width: 100%;
+height: 100%;
+}
+
+.itd-paws.tab-body {
+display: flex;
+position: relative;
+width: 100%;
+height: 100%;
+background-color: var(--menu-tab-bg-color);
+border: 2px solid var(--menu-tab-border-color);
+}
+
+.itd-paws.tab-selector {
+display: flex;
+position: relative;
+height: var(--menu-tab-selector-height);
+width: 100%;
+}
+.itd-paws.tab-wrapper {
+width: 100%;
+height: 100%;
+display: flex;
+flex-direction: column;
 }
 
 .itd-paws.btn-title {
@@ -159,21 +250,11 @@ left: 0;
 .menu-body {
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
-  padding-inline: 10px;
-}
-
-.menu-body > * {
-  flex-shrink: 0;
-  background-color: var(--el-bg-color);
-  width: 100%;
-  margin-top: 10px;
+  padding: 7px;
   position: relative;
-  border-radius: 10px;
-  padding: 10px;
+height: 100%;
+width: 100%;
 }
-
-
 
 .itd-paws-menu {
     position: relative;

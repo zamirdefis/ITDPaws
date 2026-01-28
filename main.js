@@ -21,6 +21,9 @@ import * as cfg from "./src/ui/custom/config.js"
     cfg.save_changes()
     cfg.save("first")
   })
+
+  menu.create_el("main_tab", ui.editor.el_class_name_e.tab, { "title": "El skeet menu" })
+  menu.create_el("main_tab2", ui.editor.el_class_name_e.tab, { "title": "Visuals" })
   
   cfg.init()
   
