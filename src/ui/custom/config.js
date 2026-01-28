@@ -6,7 +6,7 @@ const cur_tab_key = extension_prefix + "menu__cur_tab"
 let cur_cfg = { /* ~RAWR~ >w< */ }
 
 export function get_cur_tab() {
-  localStorage.getItem(cur_tab_key) ?? "about"
+  return localStorage.getItem(cur_tab_key) ?? "about"
 }
 
 export function set_cur_tab(tab_name) {

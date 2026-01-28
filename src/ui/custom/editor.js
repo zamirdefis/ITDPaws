@@ -27,6 +27,15 @@ export class panel_t {
     if (!this.tab_exists(tab_name, true)) { return false; }
     return this.#tabs_[tab_name]
   }
+  get_tab_btn = (tab_name) => {
+    if (!this.tab_exists(tab_name, true)) { return false; }
+    const tab_btn = this.#body_.querySelector(`.itd-paws.tab-btn[data-cfg_name="${tab_name}"]`)
+    if (!tab_btn) {
+      console.error(`It is impossible to obtain the “${tab_name}” tab switch button`)
+      return false
+    }
+    return tab_btn
+  }
   category_exists = (category_name, tab_name, with_error) => {
     const tab = this.get_tab(tab_name)
     if (!tab) { return false; }
@@ -55,6 +64,7 @@ export class panel_t {
       if (tab_btn.dataset.cfg_name === tab_name) {
         tab_btn.classList.add("active")
         if (!this.tab_exists(tab_name, true)) { return; }
+        cfg.set_cur_tab(tab_name)
         this.#tab_body_.appendChild(this.#tabs_[tab_name])
         return
       }
@@ -202,7 +212,6 @@ export class panel_t {
         btn.click()
       }
     }
-    this.#body_.appendChild(el_wrapper)
   }
 }
 

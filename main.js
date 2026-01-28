@@ -44,6 +44,7 @@ import * as cfg from "./src/ui/custom/config.js"
   })
   
   cfg.init()
+  menu.get_tab_btn(cfg.get_cur_tab()).click()
   
   console.log("ITDPaws!")
 
