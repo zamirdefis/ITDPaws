@@ -25,6 +25,54 @@ export const inject = async () => {
 --menu-tab-border-color: var(--menu-border-color);
 --menu-tab-btn-text-color: var(--menu-title-text-color);
 --menu-tab-btn-bg-color: var(--menu-tab-bg-color);
+--menu-category-bg-color: #151719;
+}
+
+.itd-paws.category-body {
+position: relative;
+width: 100%;
+height: auto;
+display: flex;
+background-color: var(--menu-category-bg-color);
+border: 2px solid var(--menu-border-color);
+padding: 8px;
+}
+
+.itd-paws.category-title {
+top: calc(var(--menu-tab-selector-height) * -0.75);
+top: 0;
+z-index: 10;
+left: 14px;
+position: absolute;
+width: auto;
+height: auto;
+display: flex;
+font-size: var(--menu-btn-title-font-size);
+color: var(--menu-title-text-color);
+}
+
+.itd-paws.category-wrapper {
+position: relative;
+width: 100%;
+height: auto;
+padding-top: calc(var(--menu-tab-selector-height) * 0.5);
+}
+
+.itd-paws.tab-content {
+width: 100%;
+height: 100%;
+position: relative;
+display: flex;
+padding: 7px;
+align-items: flex-start;
+}
+.itd-paws.tab-btn-icon {
+position: relative;
+  width: 90%;
+height: 90%;
+margin-bottom: 2px;
+margin-right: 4px;
+transition: color 0.4s ease;
 }
 
 .itd-paws.tab-btn.active {
@@ -32,22 +80,35 @@ background-color: var(--menu-tab-btn-bg-color);
 border-style: solid;
 border-color: var(--menu-tab-border-color);
 border-width: 2px 2px 0 2px;
+color: var(--menu-title-text-color);
+}
+
+.itd-paws.tab-btn:hover {
+color: var(--menu-title-text-color);
+}
+.itd-paws.tab-btn:hover .tab-btn-icon {
+color: var(--menu-title-text-color);
 }
 
 .itd-paws.tab-btn {
+display: flex;
+align-items: center;
+width: max-content;
+white-space: nowrap;
+
 z-index: 100;
 position: relative;
 margin-top: 1px;
 padding-inline: 4px;
 height: 100%;
 margin-right: 8px;
-color: var(--menu-tab-btn-text-color);
+color: color-mix(in srgb, var(--menu-tab-btn-text-color), transparent 40%);
 border-style: solid;
 border-color: #00000000;
 border-width: 2px 2px 0 2px;
 background-color: #00000000;
 outline: none;
-transition: background-color 0.7s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+transition: background-color 0.7s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.7s cubic-bezier(0.22, 1, 0.36, 1), color 0.4s ease;
 }
 
 .itd-paws.ts-tabs {

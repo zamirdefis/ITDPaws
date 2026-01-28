@@ -1,10 +1,17 @@
 const extension_prefix = "itd_paws__"
 const prefix_for_cfgs = extension_prefix + "config__"
 const initial_cfg_key = extension_prefix + "initial"
+const cur_tab_key = extension_prefix + "menu__cur_tab"
 
 let cur_cfg = { /* ~RAWR~ >w< */ }
 
+export function get_cur_tab() {
+  localStorage.getItem(cur_tab_key) ?? "about"
+}
 
+export function set_cur_tab(tab_name) {
+  localStorage.setItem(cur_tab_key, tab_name)
+}
 
 export function set_initial(cfg_name) {
   localStorage.setItem(initial_cfg_key, cfg_name)

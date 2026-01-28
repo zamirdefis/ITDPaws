@@ -22,8 +22,26 @@ import * as cfg from "./src/ui/custom/config.js"
     cfg.save("first")
   })
 
-  menu.create_el("main_tab", ui.editor.el_class_name_e.tab, { "title": "El skeet menu" })
-  menu.create_el("main_tab2", ui.editor.el_class_name_e.tab, { "title": "Visuals" })
+  menu.create_el("general", ui.editor.el_class_name_e.tab, { 
+    "title": "General",
+    "icon": "tab_general"
+  })
+  menu.create_el("visuals", ui.editor.el_class_name_e.tab, {
+    "title": "Visuals",
+    "icon": "tab_visuals"
+  })
+  menu.create_el("settings", ui.editor.el_class_name_e.tab, {
+    "title": "Settings",
+    "icon": "tab_settings"
+  })
+  menu.create_el("about", ui.editor.el_class_name_e.tab, {
+    "title": "About",
+    "icon": "tab_about"
+  })
+  menu.create_el("test", ui.editor.el_class_name_e.category, {
+    "title" : "test",
+    "tab" : "visuals"
+  })
   
   cfg.init()
   
@@ -119,10 +137,12 @@ import * as cfg from "./src/ui/custom/config.js"
           disabled : true
         })
 
-        // menu.create_el("post_json_viewer", ui.editor.el_class_name_e.button, {
-        //   on_click_c : (state) => {console.log(state)},
-        //   title: "Post JSON Viewer"
-        // })
+        menu.create_el("post_json_viewer", ui.editor.el_class_name_e.button, {
+          on_click_c : (state) => {console.log(state)},
+          title: "Post JSON Viewer",
+          category : "test",
+          tab : "visuals",
+        })
         // menu.create_el("post_id_copy_button", ui.editor.el_class_name_e.button, {
         //   on_click_c : (state) => {console.log(state)},
         //   title: "Post Id Copy Button"
