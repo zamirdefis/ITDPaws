@@ -28,61 +28,26 @@ export const inject = async () => {
 }
 
 .itd-paws.tab-btn.active {
-animation: btn-tab-active-anim 0.3s ease-out forwards;
-}
-
-.itd-paws.tab-btn.active::after {
-content: "";
-position: absolute;
-left: 0;
-bottom: -10px;
-width: 100%;
-height: 1px;
-background-color: #ff0000;
-opacity: 0;
-animation: btn-tab-line-stay-still 0.3s ease-out forwards,
-btn-tab-line-view 0.3s ease-out forwards;
-z-index: 20000;
-}
-
-@keyframes btn-tab-line-view {
-100% {
-opacity: 1;
-}
-}
-
-@keyframes btn-tab-line-stay-still {
-0% { transform: translateY(0); }
-50% { 
-transform: translateY(calc(-1 * var(--menu-tab-selector-height))); 
-}
-100% { 
-transform: translateY(0);
-}
-}
-
-@keyframes btn-tab-active-anim {
-50% { transform: translateY(var(--menu-tab-selector-height)); }
-100% {
 background-color: var(--menu-tab-btn-bg-color);
 border-style: solid;
 border-color: var(--menu-tab-border-color);
 border-width: 2px 2px 0 2px;
-transform: translateY();
-z-index: 100;
-}
 }
 
 .itd-paws.tab-btn {
+z-index: 100;
 position: relative;
 margin-top: 1px;
 padding-inline: 4px;
 height: 100%;
 margin-right: 8px;
 color: var(--menu-tab-btn-text-color);
-border: none;
-background: none;
+border-style: solid;
+border-color: #00000000;
+border-width: 2px 2px 0 2px;
+background-color: #00000000;
 outline: none;
+transition: background-color 0.7s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .itd-paws.ts-tabs {
