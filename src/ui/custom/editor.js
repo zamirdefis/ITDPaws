@@ -76,7 +76,7 @@ export class panel_t {
     this.#wrapper_.classList.add("itd-paws-menu-wrapper")
 
     this.#panel_ = elc.createElement("div")
-    this.#panel_.classList.add("itd-paws-menu")
+    this.#panel_.classList.add("itd-paws-menu", "no-transition")
 
     const header = elc.createElement("div")
     header.classList.add("menu-header")
