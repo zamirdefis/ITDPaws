@@ -27,15 +27,10 @@ export async function fresh_fetch(url, data, layer_ = 1) {
   }
   const response = await fetch(url, data)
   if (!response.ok) {
-    vars.set_token(await get_new_token())
-    const fresh_response = await fresh_fetch(url, data, ++layer_)
-    return fresh_response // я знаю про эту проблему. просто лень пока что фиксить :/ !!!
     if (response.status === 401) {
       const tmp = await get_new_token();
-      if (tmp) {
-        vars.set_token(tmp)
-        return await fresh_fetch(url, data, ++layer_)
-      }
+      vars.set_token(tmp ?? "")
+      return await fresh_fetch(url, data, layer_ + 1)
     } else {
       throw new Error("Invalid request")
     }

@@ -49,6 +49,15 @@ import * as cfg from "./src/ui/custom/config.js"
     "title" : "Info",
     "tab" : "visuals"
   })
+
+  // menu.create_el("test", ui.editor.el_class_name_e.button, {
+  //   "title" : "test",
+  //   "tab" : "visuals",
+  //   "category" : "info",
+  //   "on_click_c" : (state) => {
+  //     network.fresh_fetch
+  //   }
+  // })
   
   cfg.init()
   menu.get_tab_btn(cfg.get_cur_tab()).click()
