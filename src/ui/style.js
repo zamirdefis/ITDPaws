@@ -10,7 +10,7 @@ export const inject = async () => {
   const style_navbar = document.createElement("style")
   setTimeout(() => {
     document.querySelector(".itd-paws.itd-paws-menu").classList.remove("no-transition")
-  }, 700)
+  }, 700) // !!! fix
   style_navbar.textContent = `
 
 .post-views {

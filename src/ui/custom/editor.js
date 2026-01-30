@@ -184,7 +184,7 @@ export class panel_t {
       if (!category) { return; }
 
       const btn_wrapper = elc.createElement("div")
-      btn_wrapper.classList.add("el-title-wrapper")
+      btn_wrapper.classList.add("btn-wrapper")
       category.appendChild(btn_wrapper)
       
       const btn_left_wrapper = elc.createElement("div")
@@ -192,14 +192,21 @@ export class panel_t {
       btn_wrapper.appendChild(btn_left_wrapper)
 
       const btn_right_wrapper = elc.createElement("div")
-      btn_right_wrapper.classList.add("btn-right_wrapper")
+      btn_right_wrapper.classList.add("btn-right-wrapper")
       btn_wrapper.appendChild(btn_right_wrapper)
-
 
       const btn = elc.createElement("button")
       btn.classList.add("menu-btn", "cfg-member")
       btn.dataset.cfg_name = el_name
-      btn_wrapper.appendChild(btn)
+      btn_left_wrapper.appendChild(btn)
+
+      const btn_title = elc.createElement("div")
+      btn_title.classList.add("btn-title")
+      btn_title.textContent = data.title ?? "NONE"
+      btn_left_wrapper.appendChild(btn_title)
+
+      const test2 = elc.createElement("div")
+      btn_right_wrapper.appendChild(test2)
 
       btn.onclick = () => {
         btn.classList.toggle("active");

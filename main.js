@@ -38,9 +38,17 @@ import * as cfg from "./src/ui/custom/config.js"
     "title": "About",
     "icon": "tab_about"
   })
-  menu.create_el("test", ui.editor.el_class_name_e.category, {
-    "title" : "test",
-    "tab" : "visuals"
+
+
+
+  menu.create_el("post_actions", ui.editor.el_class_name_e.category, {
+    "title" : "Post actions",
+    "tab" : "general"
+  })
+
+  menu.create_el("developing", ui.editor.el_class_name_e.category, {
+    "title" : "Developing",
+    "tab" : "general"
   })
   
   cfg.init()
@@ -51,7 +59,7 @@ import * as cfg from "./src/ui/custom/config.js"
   ui.builders_loader.load()
     .then((res) => {
       ui.els.location.create("post_actions_loc", ".post-actions-right").then( (res) => {
-        ui.els.bundle.create("test_btn", "post_actions_loc", { 
+        ui.els.bundle.create("view_json_bundle", "post_actions_loc", { 
           builder_name: "post_actions",
           on_click_c : (is_pressed, btn) => { 
 
@@ -121,7 +129,8 @@ import * as cfg from "./src/ui/custom/config.js"
               code_block_toggle = !code_block_toggle
             }
           },
-          icon: "json"
+          icon: "json",
+          disabled: true
         })
         ui.els.bundle.create("copy_post_id", "post_actions_loc", {
           builder_name: "post_actions",
@@ -139,10 +148,15 @@ import * as cfg from "./src/ui/custom/config.js"
         })
 
         menu.create_el("post_json_viewer", ui.editor.el_class_name_e.button, {
-          on_click_c : (state) => {console.log(state)},
-          title: "Post JSON Viewer",
-          category : "test",
-          tab : "visuals",
+          on_click_c : (state) => {
+            if (ui.els.bundle.get_state("view_json_bundle", "post_actions_loc") !== state) {
+              ui.els.bundle.toggle_disabled("view_json_bundle", "post_actions_loc")
+            }
+          },
+          title: "Json viewer",
+          category : "post_actions",
+          tab : "general",
+          activated : cfg.get_field("post_json_viewer")
         })
         // menu.create_el("post_id_copy_button", ui.editor.el_class_name_e.button, {
         //   on_click_c : (state) => {console.log(state)},
@@ -188,16 +202,18 @@ import * as cfg from "./src/ui/custom/config.js"
             icon : [ "🐺", "🦊" ],
           })
 
-          // menu.create_el("bearer_token_extractor", ui.editor.el_class_name_e.button, {
-          //   on_click_c : (state) => {
-          //     if (!ui.els.bundle.exists("bearer_token_extractor", "navbar_loc")) { return; }
-          //     if (ui.els.bundle.get_state("bearer_token_extractor", "navbar_loc") !== state) {
-          //       ui.els.bundle.toggle_disabled("bearer_token_extractor", "navbar_loc")
-          //     }
-          //   },
-          //   activated : cfg.get_field("bearer_token_extractor"),
-          //   title : "Bearer Token Extractor"
-          // })
+          menu.create_el("bearer_token_extractor", ui.editor.el_class_name_e.button, {
+            on_click_c : (state) => {
+              if (!ui.els.bundle.exists("bearer_token_extractor", "navbar_loc")) { return; }
+              if (ui.els.bundle.get_state("bearer_token_extractor", "navbar_loc") !== state) {
+                ui.els.bundle.toggle_disabled("bearer_token_extractor", "navbar_loc")
+              }
+            },
+            activated : cfg.get_field("bearer_token_extractor"),
+            title : "Bearer token extractor",
+            tab : "general",
+            category : "developing"
+          })
         })
     })
     .catch((res) => {
