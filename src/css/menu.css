@@ -45,6 +45,7 @@
   width: 100%;
   height: auto;
   display: flex;
+  flex-direction: column;
   background-color: var(--menu-category-bg-color);
   border: 2px solid var(--menu-border-color);
   padding: 8px;
@@ -170,7 +171,7 @@
 
 .itd-paws.menu-btn {
   position: relative;
-  height: 85%;
+  height: calc(var(--menu-generic-font-size) * 1.12);
   margin-left: 10px;
   margin-right: 16px;
   aspect-ratio: 1 / 1;

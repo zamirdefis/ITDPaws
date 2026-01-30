@@ -210,8 +210,12 @@ export class panel_t {
 
       btn.onclick = () => {
         btn.classList.toggle("active");
+        const state = btn.classList.contains("active")
+        if (!data.no_cfg_auto_changer) {
+          cfg.set_field(el_name, state)
+        }
         if (data.on_click_c) {
-          data.on_click_c(btn.classList.contains("active"))
+          data.on_click_c(state)
         }
       }
 

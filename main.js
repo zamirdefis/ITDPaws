@@ -15,11 +15,7 @@ import * as cfg from "./src/ui/custom/config.js"
 
   const menu = new ui.editor.panel_t("ITDPaws", () => {
     document.querySelector(".itd-paws[data-bundle_name=\"menu_btn\"][data-location_name=\"navbar_loc\"]").click()
-    if (cfg.get_initial() === "default") {
-      cfg.set_initial("first")
-    }
-    cfg.save_changes()
-    cfg.save("first")
+    
   })
 
   menu.create_el("general", ui.editor.el_class_name_e.tab, { 
@@ -45,10 +41,14 @@ import * as cfg from "./src/ui/custom/config.js"
     "title" : "Post actions",
     "tab" : "general"
   })
-
   menu.create_el("developing", ui.editor.el_class_name_e.category, {
     "title" : "Developing",
     "tab" : "general"
+  })
+
+  menu.create_el("info", ui.editor.el_class_name_e.category, {
+    "title" : "Info",
+    "tab" : "visuals"
   })
   
   cfg.init()
@@ -132,20 +132,15 @@ import * as cfg from "./src/ui/custom/config.js"
           icon: "json",
           disabled: true
         })
-        ui.els.bundle.create("copy_post_id", "post_actions_loc", {
+        ui.els.bundle.create("copy_post_id_bundle", "post_actions_loc", {
           builder_name: "post_actions",
           icon: "id",
           on_click_c : (is_pressed, btn) => {
             navigator.clipboard.writeText(btn.closest(".post-container").dataset.postId)
-          }
-        })
-        ui.els.bundle.create("disable_test", "post_actions_loc", {
-          builder_name: "post_actions",
-          on_click_c : (is_pressed, btn) => {
-            console.log("HJSDHFHDS")
           },
           disabled : true
         })
+
 
         menu.create_el("post_json_viewer", ui.editor.el_class_name_e.button, {
           on_click_c : (state) => {
@@ -153,26 +148,42 @@ import * as cfg from "./src/ui/custom/config.js"
               ui.els.bundle.toggle_disabled("view_json_bundle", "post_actions_loc")
             }
           },
-          title: "Json viewer",
+          title : "Json viewer",
           category : "post_actions",
           tab : "general",
           activated : cfg.get_field("post_json_viewer")
         })
-        // menu.create_el("post_id_copy_button", ui.editor.el_class_name_e.button, {
-        //   on_click_c : (state) => {console.log(state)},
-        //   title: "Post Id Copy Button"
-        // })
+        menu.create_el("post_id_copy_button", ui.editor.el_class_name_e.button, {
+          on_click_c : (state) => {
+            if (ui.els.bundle.get_state("copy_post_id_bundle", "post_actions_loc") !== state) {
+              ui.els.bundle.toggle_disabled("copy_post_id_bundle", "post_actions_loc")
+            }
+          },
+          title : "Id copy button",
+          category : "post_actions",
+          tab : "general",
+          activated : cfg.get_field("post_id_copy_button")
+        })
         //
-        // menu.create_el("char_counter", ui.editor.el_class_name_e.button, {
-        //   on_click_c : (state) => {console.log(state)},
-        //   title: "Char Counter"
-        // })
+        
       })
 
       ui.els.location.create("textarea_loc", ".create-post__textarea, .comment-input-field, .wall-post-form__textarea")
         .then( (res) => {
-          ui.els.bundle.create("char_counter", "textarea_loc", {
-            builder_name: "char_counter"
+          ui.els.bundle.create("char_counter_bundle", "textarea_loc", {
+            builder_name : "char_counter",
+            disabled : true
+          })
+          menu.create_el("char_counter", ui.editor.el_class_name_e.button, {
+            on_click_c : (state) => {
+              if (ui.els.bundle.get_state("char_counter_bundle", "textarea_loc") !== state) {
+                ui.els.bundle.toggle_disabled("char_counter_bundle", "textarea_loc")
+              } 
+            },
+            title: "Char counter",
+            activated : cfg.get_field("char_counter"),
+            tab : "visuals",
+            category : "info"
           })
         })
         .catch( (res) => {
@@ -197,6 +208,11 @@ import * as cfg from "./src/ui/custom/config.js"
             builder_name: "navbar",
             on_click_c : (is_pressed) => {
               menu.get_root().classList.toggle('active');
+              if (cfg.get_initial() === "default") {
+                cfg.set_initial("first")
+              }
+              cfg.save_changes()
+              cfg.save("first")
             },
             type : ui.els.btn_type_e.toggle,
             icon : [ "🐺", "🦊" ],
