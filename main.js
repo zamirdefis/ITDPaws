@@ -15,7 +15,6 @@ import * as cfg from "./src/ui/custom/config.js"
 
   const menu = new ui.editor.panel_t("ITDPaws", () => {
     document.querySelector(".itd-paws[data-bundle_name=\"menu_btn\"][data-location_name=\"navbar_loc\"]").click()
-    
   })
 
   menu.create_el("general", ui.editor.el_class_name_e.tab, { 
@@ -207,6 +206,7 @@ import * as cfg from "./src/ui/custom/config.js"
           ui.els.bundle.create("menu_btn", "navbar_loc", {
             builder_name: "navbar",
             on_click_c : (is_pressed) => {
+              document.querySelector(".itd-paws.itd-paws-menu").classList.remove("no-transition")
               menu.get_root().classList.toggle('active');
               if (cfg.get_initial() === "default") {
                 cfg.set_initial("first")

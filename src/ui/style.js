@@ -8,9 +8,6 @@ export const inject = async () => {
   style_menu.href = style_menu_css_path
   document.head.appendChild(style_menu)
   const style_navbar = document.createElement("style")
-  setTimeout(() => {
-    document.querySelector(".itd-paws.itd-paws-menu").classList.remove("no-transition")
-  }, 700) // !!! fix
   style_navbar.textContent = `
 
 .post-views {
