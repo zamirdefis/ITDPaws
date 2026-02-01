@@ -10,6 +10,7 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=xn--d1ah4a.com
 // @grant        none
 // @license      MIT
+// @run-at       document-start
 // ==/UserScript==
 
 (function() {
