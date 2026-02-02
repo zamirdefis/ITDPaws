@@ -6,6 +6,11 @@ import * as cfg from "./src/ui/custom/config.js"
 
 (function() {
   'use strict';
+  
+  console.log("ITDPaws!")
+
+  network.interceptor.init()
+
   ui.style.inject()
   ui.highlight.load()
 
@@ -44,25 +49,41 @@ import * as cfg from "./src/ui/custom/config.js"
     "title" : "Developing",
     "tab" : "general"
   })
+  menu.create_el("exploits", ui.editor.el_class_name_e.category, {
+    "title" : "Exploits",
+    "tab" : "general"
+  })
+
 
   menu.create_el("info", ui.editor.el_class_name_e.category, {
     "title" : "Info",
     "tab" : "visuals"
   })
 
-  // menu.create_el("test", ui.editor.el_class_name_e.button, {
-  //   "title" : "test",
-  //   "tab" : "visuals",
-  //   "category" : "info",
-  //   "on_click_c" : (state) => {
-  //     network.fresh_fetch
-  //   }
-  // })
-  
   cfg.init()
   menu.get_tab_btn(cfg.get_cur_tab()).click()
-  
-  console.log("ITDPaws!")
+
+  // ============= in category
+
+  const view_url = "/posts/[\\w-]+/view$"
+  menu.create_el("ghost_mode", ui.editor.el_class_name_e.button, {
+    "title" : "Ghost mode",
+    "tab" : "general",
+    "category" : "exploits",
+    "on_click_c" : () => {
+      if (!network.interceptor.exists(view_url)) {
+        network.interceptor.set(view_url, { 
+          self_control : true,
+          without_args_passing : true,
+          callback : () => {
+            console.log("INTERCEPTED")
+            return new Response(null, { status : 204 })
+          }
+        })
+      }
+    },
+    "activated" : cfg.get_field("ghost_mode")
+  })
 
   ui.builders_loader.load()
     .then((res) => {
